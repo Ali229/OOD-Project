@@ -221,6 +221,7 @@ pip-log.txt
 #############
 
 */out/*
+out/*
 *.idea*
 *.idea/*
 */.idea/*
