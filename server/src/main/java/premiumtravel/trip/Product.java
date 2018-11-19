@@ -1,13 +1,13 @@
 package premiumtravel.trip;
 
-
+import premiumtravel.billing.Bill;
 
 /**
  * <!-- begin-user-doc -->
  * <!--  end-user-doc  -->
  * @generated
  */
-public  interface Product 
+public interface Product
 {
     /**
      * <!-- begin-user-doc -->

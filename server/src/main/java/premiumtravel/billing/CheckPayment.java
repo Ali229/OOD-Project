@@ -32,9 +32,13 @@ public class CheckPayment extends Payment
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public CheckPayment(){
-		super();
+	public CheckPayment(double amount){
+		super(PaymentType.Check, amount);
 	}
 
+	@Override
+	public String toString() {
+		return null;
+	}
 }
 

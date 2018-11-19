@@ -28,7 +28,7 @@ public class FinalState extends State
 	 */
 	
 	FinalState(Trip trip) {
-		super();
+		super(trip, url);
 		// TODO construct me
 	}
 

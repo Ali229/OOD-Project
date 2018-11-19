@@ -28,7 +28,7 @@ public class PaymentState extends State
 	 */
 	
 	PaymentState(Trip trip) {
-		super();
+		super(trip, url);
 		// TODO construct me
 	}
 

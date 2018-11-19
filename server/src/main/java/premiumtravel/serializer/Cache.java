@@ -1,4 +1,5 @@
 package premiumtravel.serializer;
+import java.io.File;
 import java.util.Set;
 import premiumtravel.trip.Trip;
 import java.util.List;

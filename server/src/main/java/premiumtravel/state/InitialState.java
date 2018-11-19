@@ -28,7 +28,7 @@ public class InitialState extends State
 	 */
 	
 	public InitialState(Trip trip) {
-		super();
+		super(trip, url);
 		// TODO construct me
 	}
 

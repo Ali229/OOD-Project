@@ -28,7 +28,7 @@ public class AddTravelersState extends State
 	 */
 	
 	AddTravelersState(Trip trip) {
-		super();
+		super(trip, url);
 		// TODO construct me
 	}
 

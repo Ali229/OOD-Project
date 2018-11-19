@@ -1,5 +1,6 @@
 package premiumtravel.serializer;
 
+import java.io.File;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +27,7 @@ public abstract class DataSerializer
 	 * @ordered
 	 */
 	
-	protected DataSerializer(File file) {
+	protected DataSerializer( File file) {
 		super();
 		// TODO construct me
 	}

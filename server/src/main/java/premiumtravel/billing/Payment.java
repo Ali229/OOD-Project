@@ -1,5 +1,4 @@
 package premiumtravel.billing;
-import String;
 import premiumtravel.people.Person;
 
 

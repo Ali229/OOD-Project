@@ -28,7 +28,7 @@ public class AddPackagesState extends State
 	 */
 	
 	AddPackagesState(Trip trip) {
-		super();
+		super(trip, url);
 		// TODO construct me
 	}
 

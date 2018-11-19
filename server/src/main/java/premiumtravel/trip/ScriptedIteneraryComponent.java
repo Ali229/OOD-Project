@@ -1,5 +1,6 @@
 package premiumtravel.trip;
 
+import java.util.function.Supplier;
 
 /**
  * <!-- begin-user-doc -->
@@ -16,7 +17,7 @@ public class ScriptedIteneraryComponent extends AbstractIteneraryComponent
 	 * @ordered
 	 */
 	
-	private Producer script;
+	private Supplier<String> script;
 
 
 	/**
@@ -26,7 +27,7 @@ public class ScriptedIteneraryComponent extends AbstractIteneraryComponent
 	 * @ordered
 	 */
 	
-	ScriptedIteneraryComponent(Producer script) {
+	ScriptedIteneraryComponent(Supplier<String> script) {
 		super();
 		// TODO construct me
 	}

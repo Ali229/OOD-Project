@@ -28,15 +28,6 @@ public class Bill
 	
 	public Payment payment;
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Product product2;
-
 
 	/**
 	 * <!-- begin-user-doc -->
