@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="TRACE">
+
+    <Properties>
+        <Property name="filePath">/var/log/PremiumTravel/Server</Property>
+        <Property name="fileName">PremiumTravelServer</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- https://stackoverflow.com/questions/21206993/very-simple-log4j2-xml-configuration-file-using-console-and-file-appender -->
+        <RollingFile name="RollingFile" fileName="${filePath}/${fileName}.log"
+                     filePattern="${filePath}/${fileName}_%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="[%highlight{%-5level}] %d{DEFAULT} %c{1}.%M() - %msg%n%throwable{short.lineNumber}" />
+            <Policies>
+                <!-- Causes a rollover if the log file is older than the current JVM's start time -->
+                <OnStartupTriggeringPolicy />
+                <!-- Causes a rollover once the date/time pattern no longer applies to the active file -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="premiumtravel.PremiumTravelServer" level="trace" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+
+        <Root level="error">
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

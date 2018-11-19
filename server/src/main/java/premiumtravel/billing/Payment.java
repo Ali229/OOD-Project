@@ -1,4 +1,6 @@
 package premiumtravel.billing;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import premiumtravel.people.Person;
 
 
@@ -10,6 +12,8 @@ import premiumtravel.people.Person;
 
 public abstract class Payment
 {
+	private static final Logger logger = LogManager.getLogger("premiumtravel.PremiumTravelServer");
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->

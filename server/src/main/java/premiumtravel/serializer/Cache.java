@@ -1,6 +1,9 @@
 package premiumtravel.serializer;
 import java.io.File;
 import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import premiumtravel.trip.Trip;
 import java.util.List;
 import premiumtravel.people.Person;
@@ -14,6 +17,9 @@ import premiumtravel.people.Person;
 
 public class Cache
 {
+
+	private static final Logger logger = LogManager.getLogger("premiumtravel.PremiumTravelServer");
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->

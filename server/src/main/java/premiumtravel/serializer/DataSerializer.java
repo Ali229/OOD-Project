@@ -1,5 +1,8 @@
 package premiumtravel.serializer;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 
 /**
@@ -10,6 +13,9 @@ import java.io.File;
 
 public abstract class DataSerializer
 {
+
+	private static final Logger logger = LogManager.getLogger("premiumtravel.PremiumTravelServer");
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
@@ -27,9 +33,10 @@ public abstract class DataSerializer
 	 * @ordered
 	 */
 	
-	protected DataSerializer( File file) {
+	protected DataSerializer( File file ) {
 		super();
 		// TODO construct me
+		LogManager.getLogger().info( "Setting save file: " + file.getAbsolutePath() );
 	}
 
 	/**
