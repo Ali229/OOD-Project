@@ -1,5 +1,7 @@
 package premiumtravel.state;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import premiumtravel.trip.Trip;
 
 /**
@@ -9,6 +11,9 @@ import premiumtravel.trip.Trip;
  */
 
 public class ThankYouState extends State {
+
+	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
+
 	/**
 	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *

@@ -16,10 +16,10 @@ import javax.ws.rs.PathParam;
 @Path( "/trip/{trip-id}/bill" )
 public class BillController {
 
-	private static final Logger logger = LogManager.getLogger("premiumtravel.PremiumTravelServer");
+	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
 	@GET
-	public JsonObject getBill(@PathParam ( "trip-id" ) Integer tripID) {
+	public JsonObject getBill( @PathParam( "trip-id" ) Integer tripID ) {
 		logger.error( "GET called on /trip/" + tripID + "/bill" );
 		return Json.createObjectBuilder().add( "bill", "stuff" ).build();
 	}

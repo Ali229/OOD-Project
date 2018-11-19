@@ -1,11 +1,11 @@
 package premiumtravel.serializer;
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
+ * <!-- begin-user-doc --> <!--  end-user-doc  -->
+ *
  * @generated
  */
-public enum SerializationProtocol
-{
-	XML, JSON;
+public enum SerializationProtocol {
+	XML,
+	JSON;
 }

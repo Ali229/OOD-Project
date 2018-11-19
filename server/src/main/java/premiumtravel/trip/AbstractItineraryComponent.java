@@ -1,55 +1,58 @@
 package premiumtravel.trip;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
+ * <!-- begin-user-doc --> <!--  end-user-doc  -->
+ *
  * @generated
  */
 
-public class AbstractIteneraryComponent implements IteneraryComponent
-{
+public class AbstractItineraryComponent implements IteneraryComponent {
+
+	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
+
 	private IteneraryComponent precedingComponent;
 
-
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
-	protected AbstractIteneraryComponent() {
+
+	protected AbstractItineraryComponent() {
 		super();
 		// TODO construct me
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
-	protected AbstractIteneraryComponent(IteneraryComponent precedingComponent) {
+
+	protected AbstractItineraryComponent( IteneraryComponent precedingComponent ) {
 		super();
 		// TODO construct me
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
+
 	public String getItenerary() {
 		// TODO implement me
 		return "";

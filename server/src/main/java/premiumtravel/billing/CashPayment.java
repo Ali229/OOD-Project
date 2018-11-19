@@ -1,5 +1,8 @@
 package premiumtravel.billing;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * <!-- begin-user-doc --> <!--  end-user-doc  -->
  *
@@ -7,6 +10,9 @@ package premiumtravel.billing;
  */
 
 public class CashPayment extends Payment {
+
+	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
+
 	/**
 	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *

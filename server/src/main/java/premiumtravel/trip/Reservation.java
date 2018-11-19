@@ -1,107 +1,107 @@
 package premiumtravel.trip;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Date;
 
-
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
+ * <!-- begin-user-doc --> <!--  end-user-doc  -->
+ *
  * @generated
  */
 
-public class Reservation implements Product
-{
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private Date departingOn;
+public class Reservation implements Product {
 
+	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
+
+	public Trip trip;
+	/**
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+
+	public TravelPackage chosenPackage;
+	/**
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+
+	private Date departingOn;
+	/**
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+
 	private Date arrivingOn;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
-	public Trip trip;
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public TravelPackage chosenPackage;
-
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Reservation(TravelPackage travelPackage, Date departureDate) {
+	public Reservation( TravelPackage travelPackage, Date departureDate ) {
 		super();
 		// TODO construct me
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
+
 	public Date getDepartureDate() {
 		// TODO implement me
 		return new Date();
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
+
 	public Date getArrivalDate() {
 		// TODO implement me
 		return new Date();
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
+
 	public TravelPackage getPackage() {
 		// TODO implement me
 		return null;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
+
 	public double getPrice() {
 		// TODO implement me
 		return 0.0;

@@ -6,33 +6,31 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
+ * <!-- begin-user-doc --> <!--  end-user-doc  -->
+ *
  * @generated
  */
 
-public abstract class DataSerializer
-{
+public abstract class DataSerializer {
 
-	private static final Logger logger = LogManager.getLogger("premiumtravel.PremiumTravelServer");
+	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
+
 	public Cache cache;
 
-
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
+
 	protected DataSerializer( File file ) {
 		super();
 		// TODO construct me
@@ -40,22 +38,22 @@ public abstract class DataSerializer
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
-	protected abstract void saveData(PeopleTripsTuple data) ;
+
+	protected abstract void saveData( PeopleTripsTuple data );
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
+	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	
-	protected abstract PeopleTripsTuple loadData() ;
+
+	protected abstract PeopleTripsTuple loadData();
 
 }
 
