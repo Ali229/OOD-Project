@@ -20,7 +20,7 @@ public class BillController {
 
 	@GET
 	public JsonObject getBill( @PathParam( "trip-id" ) Integer tripID ) {
-		logger.error( "GET called on /trip/" + tripID + "/bill" );
+		logger.debug( "GET called on /trip/" + tripID + "/bill" );
 		return Json.createObjectBuilder().add( "bill", "stuff" ).build();
 	}
 }
