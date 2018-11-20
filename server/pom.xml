@@ -11,6 +11,7 @@
     <description>Final project for the SWE4743 class at Kennesaw State University for the Fall 2018 semester
     </description>
     <url>https://github.com/Ali229/Premium-Travel</url>
+    <packaging>war</packaging>
 
     <issueManagement>
         <url>https://github.com/Ali229/Premium-Travel/issues</url>
