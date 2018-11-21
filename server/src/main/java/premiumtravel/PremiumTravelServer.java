@@ -6,7 +6,11 @@ import premiumtravel.billing.BillRESTController;
 import premiumtravel.billing.PaymentRESTController;
 import premiumtravel.trip.TripRESTController;
 
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,13 +22,22 @@ import java.util.Set;
 @ApplicationPath( "/" )
 public class PremiumTravelServer extends Application {
 
-	private static final Logger logger = LogManager.getLogger("premiumtravel.PremiumTravelServer");
+	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
 	public Set<Class<?>> getClasses() {
 		HashSet<Class<?>> h = new HashSet<>();
+		h.add( RootPath.class );
 		h.add( BillRESTController.class );
 		h.add( PaymentRESTController.class );
 		h.add( TripRESTController.class );
 		return h;
+	}
+
+	@Path( "/" )
+	public static class RootPath {
+		@GET
+		public JsonObject getWelcome() {
+			return Json.createObjectBuilder().add( "message", "Welcome to the Premium-Travel backend!" ).build();
+		}
 	}
 }
