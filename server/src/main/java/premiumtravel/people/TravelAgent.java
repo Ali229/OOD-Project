@@ -2,49 +2,25 @@ package premiumtravel.people;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import premiumtravel.trip.Trip;
-
-import java.util.Set;
 
 /**
- * <!-- begin-user-doc --> <!--  end-user-doc  -->
  *
- * @generated
  */
-
 public class TravelAgent extends Person {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
+	private static final long serialVersionUID = -992437641860585387L;
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
+	 * @param firstName   The first name of the new Travel Agent.
+	 * @param lastName    The last name of the new Travel Agent.
+	 * @param phoneNumber The phone number of the new Travel Agent.
 	 */
-
-	public Set<Trip> trip;
-
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	public TravelAgentRegistry travelAgentRegistry;
-
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	TravelAgent() {
-		super();
-		// TODO construct me
+	TravelAgent( String firstName, String lastName, String phoneNumber ) {
+		super( firstName, lastName, phoneNumber );
+		logger.trace(
+				String.format( "Creating new TravelAgent with first name: %s, last name: %s, and phone number: %s",
+						firstName, lastName, phoneNumber ) );
 	}
-
 }
 
