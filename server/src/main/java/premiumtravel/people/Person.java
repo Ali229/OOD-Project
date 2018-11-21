@@ -2,116 +2,83 @@ package premiumtravel.people;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import premiumtravel.billing.Payment;
 
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
 /**
- * <!-- begin-user-doc --> <!--  end-user-doc  -->
  *
- * @generated
  */
-
-public class Person {
+public class Person implements Serializable {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
+	private static final long serialVersionUID = 1136327435690788571L;
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
+	 * Used to verify that each ID is unique.
 	 */
+	private static Set<UUID> registeredIDs = new LinkedHashSet<>();
 
-	private static Set<Integer> registeredIDs;
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	private final String firstName = "";
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	private final String lastName = "";
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	private final String phoneNumber = "";
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	public Set<Payment> payment;
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	private int personID;
+	private final String firstName;
+	private final String lastName;
+	private final String phoneNumber;
+	private final UUID personID;
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
+	 * Constructs a new Person and automatically generates a new ID.
 	 */
+	Person( String firstName, String lastName, String phoneNumber ) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
 
-	Person() {
-		super();
-		// TODO construct me
+		// Generate a new ID
+		UUID generatedID = null;
+		boolean idSet = false;
+		while ( !idSet ) {
+			try {
+				generatedID = UUID.randomUUID();
+				registeredIDs.add( generatedID );
+				idSet = true;
+			} catch ( UnsupportedOperationException e ) {
+				// Do nothing
+			}
+		}
+
+		this.personID = generatedID;
+
+		logger.trace( String.format(
+				"Creating new Person with first name: %s, last name: %s, phone number: %s, and person ID: %s",
+				firstName, lastName, phoneNumber,
+				this.personID.toString() ) ); // It's redundant, but I'm using TRACE to log basically everything
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
+	 * Retrieves this person's first name.
 	 */
-
 	public String getFirstName() {
-		// TODO implement me
-		return "";
+		return this.firstName;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
+	 * Retrieves this person's last name.
 	 */
-
 	public String getLastName() {
-		// TODO implement me
-		return "";
+		return this.lastName;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
+	 * Retrieves the phone number associated with this Person.
 	 */
-
 	public String getPhoneNumber() {
-		// TODO implement me
-		return "";
+		return this.phoneNumber;
 	}
 
+	/**
+	 * Retrieves the ID of the person
+	 */
+	public String getPersonID() {
+		return this.personID.toString();
+	}
 }
 
