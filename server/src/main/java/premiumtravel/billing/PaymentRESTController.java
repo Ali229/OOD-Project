@@ -5,9 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 /**
  * @author Mark Zeagler
@@ -24,7 +23,8 @@ public class PaymentRESTController {
 	//	}
 
 	@GET
-	public JsonObject getPayment( @PathParam( "trip-id" ) Integer tripID ) {
+	@Produces( MediaType.APPLICATION_JSON )
+	public JsonObject getPayment( @DefaultValue( "-1" ) @PathParam( "trip-id" ) Integer tripID ) {
 		logger.debug( "GET called on /trip/" + tripID + "/payment" );
 		return Json.createObjectBuilder().add( "payment", "none" ).build();
 	}
