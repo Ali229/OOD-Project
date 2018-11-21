@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import premiumtravel.billing.BillRESTController;
 import premiumtravel.billing.PaymentRESTController;
+import premiumtravel.people.PersonRESTController;
 import premiumtravel.people.TravelAgentRESTController;
 import premiumtravel.trip.TripRESTController;
 
@@ -32,6 +33,7 @@ public class PremiumTravelServer extends Application {
 		h.add( PaymentRESTController.class );
 		h.add( TripRESTController.class );
 		h.add( TravelAgentRESTController.class );
+		h.add( PersonRESTController.class );
 		return h;
 	}
 
