@@ -13,14 +13,19 @@ import javax.ws.rs.PathParam;
  * @author Mark Zeagler
  * @version 1.0
  */
-@Path( "/trip/{trip-id}/bill" )
-public class BillController {
+@Path( "/trip/{trip-id}/payment" )
+public class PaymentRESTController {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
+	//	@POST
+	//	public JsonObject postPayment( @PathParam( "trip-id" ) Integer tripID ) {
+	//
+	//	}
+
 	@GET
-	public JsonObject getBill( @PathParam( "trip-id" ) Integer tripID ) {
-		logger.debug( "GET called on /trip/" + tripID + "/bill" );
-		return Json.createObjectBuilder().add( "bill", "stuff" ).build();
+	public JsonObject getPayment( @PathParam( "trip-id" ) Integer tripID ) {
+		logger.debug( "GET called on /trip/" + tripID + "/payment" );
+		return Json.createObjectBuilder().add( "payment", "none" ).build();
 	}
 }

@@ -2,9 +2,9 @@ package premiumtravel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import premiumtravel.billing.BillController;
-import premiumtravel.billing.PaymentController;
-import premiumtravel.trip.TripController;
+import premiumtravel.billing.BillRESTController;
+import premiumtravel.billing.PaymentRESTController;
+import premiumtravel.trip.TripRESTController;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -22,9 +22,9 @@ public class PremiumTravelServer extends Application {
 
 	public Set<Class<?>> getClasses() {
 		HashSet<Class<?>> h = new HashSet<>();
-		h.add( BillController.class );
-		h.add( PaymentController.class );
-		h.add( TripController.class );
+		h.add( BillRESTController.class );
+		h.add( PaymentRESTController.class );
+		h.add( TripRESTController.class );
 		return h;
 	}
 }

@@ -14,7 +14,7 @@ import javax.ws.rs.PathParam;
  * @version 1.0
  */
 @Path( "trip/{trip-id}" )
-public class TripController {
+public class TripRESTController {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
