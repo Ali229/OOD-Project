@@ -13,6 +13,7 @@ import premiumtravel.trip.Trip;
 public class Traveller extends Person {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
+	private static final long serialVersionUID = 355997950295321907L;
 
 	/**
 	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
@@ -33,16 +34,15 @@ public class Traveller extends Person {
 	public PersonRegistry personRegistry;
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
+	 * @param firstName
+	 * @param lastName
+	 * @param phoneNumber
 	 */
-
-	Traveller() {
-		super();
-		// TODO construct me
+	Traveller( String firstName, String lastName, String phoneNumber ) {
+		super( firstName, lastName, phoneNumber );
+		logger.trace(
+				String.format( "Creating new Traveller with first name: %s, last name: %s, and phone number: %s",
+						firstName, lastName, phoneNumber ) );
 	}
-
 }
 
