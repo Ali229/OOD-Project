@@ -20,11 +20,6 @@ public class TravelAgentRegistry implements Serializable {
 	/**
 	 *
 	 */
-	private TravelAgentRegistry travelAgentRegistry;
-
-	/**
-	 *
-	 */
 	private TravelAgentRegistry() {
 	}
 

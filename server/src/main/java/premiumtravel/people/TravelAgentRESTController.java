@@ -1,5 +1,6 @@
 package premiumtravel.people;
 
+import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +23,8 @@ public class TravelAgentRESTController {
 	@Produces( MediaType.APPLICATION_JSON )
 	public JsonObject getTravelAgent( @DefaultValue( "-1" ) @PathParam( "travel-agent-id" ) String travelAgentID ) {
 		logger.trace( "GET called on /travel-agent/" + travelAgentID );
-		return Json.createObjectBuilder().add( "bill", "stuff" ).build();
+		return Json.createObjectBuilder()
+				.add( "travel-agents", new Gson().toJson( TravelAgentRegistry.getTravelAgents() ) ).build();
 	}
 
 	@POST
