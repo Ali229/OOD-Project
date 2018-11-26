@@ -3,12 +3,15 @@ package premiumtravel.trip;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import premiumtravel.billing.Bill;
+import premiumtravel.cache.RegistryObject;
 import premiumtravel.people.TravelAgent;
 import premiumtravel.people.Traveller;
-import premiumtravel.cache.RegistryObject;
 import premiumtravel.state.State;
 
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  *
@@ -33,7 +36,7 @@ public class Trip implements Product, RegistryObject {
 	/**
 	 *
 	 */
-	public Trip () {
+	public Trip() {
 		super();
 
 		// Generate a new ID
@@ -129,7 +132,7 @@ public class Trip implements Product, RegistryObject {
 
 	@Override
 	public UUID getID() {
-		return null;
+		return this.tripID;
 	}
 }
 
