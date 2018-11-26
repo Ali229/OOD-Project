@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ModalDirective} from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-maketrip',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./maketrip.component.scss']
 })
 export class MaketripComponent implements OnInit {
+  @ViewChild('travelersModal') public travelersModal: ModalDirective;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
+  showTravelersModal() {
+    this.travelersModal.show();
+  }
 }

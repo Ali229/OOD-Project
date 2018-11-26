@@ -1,18 +1,16 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {AppComponent} from './app.component';
+import {NavbarComponent} from './navbar/navbar.component';
 import {AppRoutingModule, routingComponents} from './app-routing.module';
-import { MainpageComponent } from './mainpage/mainpage.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    routingComponents,
-    MainpageComponent
+    routingComponents
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -22,4 +20,5 @@ import { MainpageComponent } from './mainpage/mainpage.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
