@@ -3,7 +3,9 @@ package premiumtravel.rest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import premiumtravel.people.Person;
+import premiumtravel.people.PersonFactory;
 
+import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
@@ -17,6 +19,10 @@ import javax.ws.rs.core.MediaType;
 public class PersonRESTController {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
+	/**
+	 * Singleton bean instantiated by Java EE
+	 */
+	@EJB private PersonFactory personFactory;
 
 	@GET
 	@Path( "{person-id}" )
@@ -31,7 +37,7 @@ public class PersonRESTController {
 	@Produces( MediaType.APPLICATION_JSON )
 	public JsonObject postTravelAgent( PersonRESTController.NewPersonParameters data ) {
 		logger.debug( "POST called on /person with data: " + data.toString() );
-		Person person = new Person( data.firstName, data.lastName, data.phoneNumber );
+		Person person = this.personFactory.getGuest( data.firstName, data.lastName, data.phoneNumber );
 		return Json.createObjectBuilder().add( "person_id", person.getPersonID() ).build();
 	}
 

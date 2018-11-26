@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import premiumtravel.cache.TravelAgentRegistry;
 import premiumtravel.cache.TravellerRegistry;
+import premiumtravel.people.PersonFactory;
 import premiumtravel.people.TravelAgent;
 
 import javax.ejb.EJB;
@@ -29,6 +30,10 @@ public class TravelAgentRESTController {
 	 * Singleton bean instantiated by Java EE
 	 */
 	@EJB private TravelAgentRegistry travelAgentRegistry;
+	/**
+	 * Singleton bean instantiated by Java EE
+	 */
+	@EJB private PersonFactory personFactory;
 
 	@GET
 	@Path( "{travel-agent-id}" )
@@ -44,7 +49,7 @@ public class TravelAgentRESTController {
 	@Produces( MediaType.APPLICATION_JSON )
 	public JsonObject postTravelAgent( PersonRESTController.NewPersonParameters data ) {
 		logger.trace( "POST called on /travel-agent with data: " + data.toString() );
-		TravelAgent travelAgent = new TravelAgent( data.firstName, data.lastName, data.phoneNumber );
+		TravelAgent travelAgent = this.personFactory.getTravelAgent( data.firstName, data.lastName, data.phoneNumber );
 		return Json.createObjectBuilder().add( "person_id", travelAgent.getPersonID() ).build();
 	}
 }
