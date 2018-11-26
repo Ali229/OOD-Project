@@ -19,7 +19,7 @@ public class Person implements RegistryObject {
 	/**
 	 * Used to verify that each ID is unique.
 	 */
-	private static Set<UUID> registeredIDs = new LinkedHashSet<>();
+	private transient static Set<UUID> registeredIDs = new LinkedHashSet<>();
 
 	private final String firstName;
 	private final String lastName;

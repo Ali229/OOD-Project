@@ -37,7 +37,6 @@ public class PersonFactory {
 	 */
 	@PostConstruct
 	void init() {
-		logger.error( "Got here!" );
 		personFunctionMap.put( PersonType.TravelAgent, this::getTravelAgent );
 		personFunctionMap.put( PersonType.Traveller, this::getTraveller );
 		personFunctionMap.put( PersonType.SystemGuest, this::getGuest );

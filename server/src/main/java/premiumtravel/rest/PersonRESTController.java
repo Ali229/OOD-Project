@@ -10,6 +10,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.HashMap;
 
 /**
  * @author Mark Zeagler
@@ -35,20 +36,10 @@ public class PersonRESTController {
 	@POST
 	@Consumes( MediaType.APPLICATION_JSON )
 	@Produces( MediaType.APPLICATION_JSON )
-	public JsonObject postTravelAgent( PersonRESTController.NewPersonParameters data ) {
+	public JsonObject postTravelAgent( HashMap<String, String> data ) {
 		logger.debug( "POST called on /person with data: " + data.toString() );
-		Person person = this.personFactory.getGuest( data.firstName, data.lastName, data.phoneNumber );
+		Person person = this.personFactory
+				.getGuest( data.get( "firstName" ), data.get( "lastName" ), data.get( "phoneNumber" ) );
 		return Json.createObjectBuilder().add( "person_id", person.getPersonID() ).build();
-	}
-
-	public static class NewPersonParameters {
-		String firstName;
-		String lastName;
-		String phoneNumber;
-
-		@Override
-		public String toString() {
-			return "firstName: " + firstName + ", lastName" + lastName + ", phoneNumber: " + phoneNumber;
-		}
 	}
 }
