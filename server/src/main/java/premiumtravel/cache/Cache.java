@@ -32,33 +32,35 @@ public class Cache {
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB TravellerRegistry travellerRegistry;
+	@EJB private TravelAgentRegistry travelAgentRegistry;
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB PersonRegistry personRegistry;
+	@EJB private TravellerRegistry travellerRegistry;
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB TripRegistry tripRegistry;
+	@EJB private PersonRegistry personRegistry;
+	/**
+	 * Singleton bean instantiated by Java EE
+	 */
+	@EJB private TripRegistry tripRegistry;
+
 	private SerializationProtocol protocol;
 	private DataSerializer serializer;
 	private File file;
-	/**
-	 * Singleton bean instantiated by Java EE
-	 */
-	@EJB private TravelAgentRegistry travelAgentRegistry;
 
 	/**
 	 * This is Java EE's Singleton "constructor"
 	 */
 	@PostConstruct
 	void init() {
+		logger.error( getClass().getResource( "/config.ini" ).toString() );
 		try {
-			ini = new Wini( getClass().getResourceAsStream( "/../resources/config.ini" ) );
+			ini = new Wini( getClass().getResourceAsStream( "/config.ini" ) );
 		} catch ( Exception e ) {
 			logger.error( "The config file could not be loaded." );
-			logger.error( e.getMessage() );
+			logger.error( e.getClass().getSimpleName() + ": " + e.getMessage() );
 		}
 		setProtocol( SerializationProtocol.valueOf( ini.get( "Serializer", "serializer" ).trim() ) );
 		this.file = new File( ini.get( "Serializer", "saveFilePath" ) );
