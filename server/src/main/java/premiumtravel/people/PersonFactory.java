@@ -6,23 +6,27 @@ import premiumtravel.cache.TravelAgentRegistry;
 import premiumtravel.cache.TravellerRegistry;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.ConcurrencyManagement;
-import javax.ejb.ConcurrencyManagementType;
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
+import javax.ejb.*;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Model;
+import javax.inject.Named;
 import java.util.EnumMap;
 import java.util.Map;
 
 /**
  *
  */
+@Named
+@Model
+@Startup
 @Singleton
+@ApplicationScoped
 @ConcurrencyManagement( ConcurrencyManagementType.CONTAINER )
 public class PersonFactory {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
-	private Map<PersonType, MyFunction> personFunctionMap = new EnumMap<>( PersonType.class );
+	private static Map<PersonType, MyFunction> personFunctionMap = new EnumMap<>( PersonType.class );
 
 	@EJB private TravelAgentRegistry travelAgentRegistry;
 
@@ -33,6 +37,7 @@ public class PersonFactory {
 	 */
 	@PostConstruct
 	void init() {
+		logger.error( "Got here!" );
 		personFunctionMap.put( PersonType.TravelAgent, this::getTravelAgent );
 		personFunctionMap.put( PersonType.Traveller, this::getTraveller );
 		personFunctionMap.put( PersonType.SystemGuest, this::getGuest );
@@ -66,7 +71,7 @@ public class PersonFactory {
 	public enum PersonType {
 		Traveller,
 		TravelAgent,
-		SystemGuest;
+		SystemGuest
 	}
 
 	private interface MyFunction {

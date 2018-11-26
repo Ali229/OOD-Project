@@ -1,6 +1,5 @@
 package premiumtravel.cache;
 
-import com.sun.istack.internal.Nullable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,7 +33,7 @@ public abstract class Registry<T extends RegistryObject> extends Observable impl
 	 * @param newList
 	 */
 	@Lock( LockType.WRITE )
-	void resetTravelAgents( @Nullable Collection<T> newList ) {
+	void resetTravelAgents( Collection<T> newList ) {
 		this.registryList.clear();
 		if ( newList != null ) {
 			this.registryList.addAll( newList );

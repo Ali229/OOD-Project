@@ -2,11 +2,14 @@ package premiumtravel.cache;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ini4j.Ini;
+import org.ini4j.Wini;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.*;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Model;
+import javax.inject.Named;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -15,23 +18,16 @@ import java.util.Date;
 /**
  *
  */
+@Named
+@Model
 @Startup
 @Singleton
+@ApplicationScoped
 @ConcurrencyManagement( ConcurrencyManagementType.CONTAINER )
-public final class Cache {
+public class Cache {
 
-	private static final Logger logger;
-	private static Ini ini;
-
-	static {
-		logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
-		try {
-			ini = new Ini( new File( "/resources/config.ini" ) );
-		} catch ( IOException e ) {
-			logger.error( "The config file could not be loaded." );
-			logger.error( e.getMessage() );
-		}
-	}
+	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
+	private static Wini ini;
 
 	/**
 	 * Singleton bean instantiated by Java EE
@@ -54,17 +50,17 @@ public final class Cache {
 	@EJB private TravelAgentRegistry travelAgentRegistry;
 
 	/**
-	 * Private constructor for singleton https://www.softwareyoga.com/java-ee-singleton-vs-singleton-pattern/
-	 */
-	private Cache() {
-	}
-
-	/**
 	 * This is Java EE's Singleton "constructor"
 	 */
 	@PostConstruct
 	void init() {
-		setProtocol( SerializationProtocol.valueOf( ini.get( "Serializer", "cache" ) ) );
+		try {
+			ini = new Wini( getClass().getResourceAsStream( "/../resources/config.ini" ) );
+		} catch ( Exception e ) {
+			logger.error( "The config file could not be loaded." );
+			logger.error( e.getMessage() );
+		}
+		setProtocol( SerializationProtocol.valueOf( ini.get( "Serializer", "serializer" ).trim() ) );
 		this.file = new File( ini.get( "Serializer", "saveFilePath" ) );
 
 		if ( file.exists() ) {
@@ -82,7 +78,7 @@ public final class Cache {
 	 * data using the assigned serialization protocol or with the default cache if there's an error.
 	 */
 	@PreDestroy
-	void tearDown() throws IOException {
+	void tearDown() {
 		if ( this.serializer == null ) {
 			logger.error(
 					"The system is shutting down while no cache is set. The data will be serialized with the DEFAULT cache." );
@@ -94,14 +90,14 @@ public final class Cache {
 			} catch ( IOException e ) {
 				logger.error( "There was an error creating the error dump file." );
 				logger.error( e.getMessage() );
-				throw e;
+				return;
 			}
 			try {
 				saveAll();
 			} catch ( IOException e ) {
 				logger.error( "There was an error while saving the current data to the dump file." );
 				logger.error( e.getMessage() );
-				throw e;
+				return;
 			}
 		}
 		try {
@@ -109,7 +105,6 @@ public final class Cache {
 		} catch ( Exception e ) {
 			logger.error( "There was an error while saving the current data to the designated save file." );
 			logger.error( e.getMessage() );
-			throw e;
 		}
 	}
 

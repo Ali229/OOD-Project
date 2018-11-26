@@ -14,7 +14,7 @@ import java.util.List;
 /**
  *
  */
-public final class SaveData implements Serializable {
+public class SaveData implements Serializable {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 	private static final long serialVersionUID = 6643271873714785332L;
