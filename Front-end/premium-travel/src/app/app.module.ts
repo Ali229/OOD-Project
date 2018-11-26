@@ -4,6 +4,9 @@ import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {AppRoutingModule, routingComponents} from './app-routing.module';
+import { MainpageComponent } from './mainpage/mainpage.component';
+import {ResourcesService} from "./services/resources.service";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -15,9 +18,12 @@ import {AppRoutingModule, routingComponents} from './app-routing.module';
   imports: [
     MDBBootstrapModule.forRoot(),
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    ResourcesService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
