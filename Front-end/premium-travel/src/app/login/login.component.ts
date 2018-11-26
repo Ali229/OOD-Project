@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ResourcesService} from '../services/resources.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  private agentList: Agent[];
+
+  constructor(private resService: ResourcesService) {
+  }
 
   ngOnInit() {
+    this.resService.getAllAgentsObservable().subscribe((response: Agent[]) => {
+      this.agentList = response;
+      console.log(this.agentList);
+    });
   }
 
 }
