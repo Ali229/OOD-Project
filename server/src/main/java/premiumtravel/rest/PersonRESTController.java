@@ -1,7 +1,8 @@
-package premiumtravel.people;
+package premiumtravel.rest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.people.Person;
 
 import javax.json.Json;
 import javax.json.JsonObject;

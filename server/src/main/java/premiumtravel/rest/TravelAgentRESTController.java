@@ -1,10 +1,11 @@
-package premiumtravel.people;
+package premiumtravel.rest;
 
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import premiumtravel.cache.TravelAgentRegistry;
 import premiumtravel.cache.TravellerRegistry;
+import premiumtravel.people.TravelAgent;
 
 import javax.ejb.EJB;
 import javax.json.Json;

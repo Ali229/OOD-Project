@@ -2,11 +2,11 @@ package premiumtravel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import premiumtravel.billing.BillRESTController;
-import premiumtravel.billing.PaymentRESTController;
-import premiumtravel.people.PersonRESTController;
-import premiumtravel.people.TravelAgentRESTController;
-import premiumtravel.trip.TripRESTController;
+import premiumtravel.rest.BillRESTController;
+import premiumtravel.rest.PaymentRESTController;
+import premiumtravel.rest.PersonRESTController;
+import premiumtravel.rest.TravelAgentRESTController;
+import premiumtravel.rest.TripRESTController;
 
 import javax.json.Json;
 import javax.json.JsonObject;
