@@ -2,14 +2,16 @@ package premiumtravel.people;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.serializer.RegistryObject;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  *
  */
-public class Person implements Serializable {
+public class Person implements RegistryObject {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 	private static final long serialVersionUID = 1136327435690788571L;
@@ -79,6 +81,11 @@ public class Person implements Serializable {
 	 */
 	public String getPersonID() {
 		return this.personID.toString();
+	}
+
+	@Override
+	public UUID getID() {
+		return this.personID;
 	}
 }
 

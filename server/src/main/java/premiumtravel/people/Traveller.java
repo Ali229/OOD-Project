@@ -2,12 +2,14 @@ package premiumtravel.people;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.serializer.TravelAgentRegistry;
+import premiumtravel.serializer.TravellerRegistry;
 import premiumtravel.trip.Trip;
 
+import javax.ejb.EJB;
+
 /**
- * <!-- begin-user-doc --> <!--  end-user-doc  -->
  *
- * @generated
  */
 
 public class Traveller extends Person {
@@ -15,23 +17,13 @@ public class Traveller extends Person {
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 	private static final long serialVersionUID = 355997950295321907L;
 
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
 	public Trip trip;
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
+	 * Singleton bean instantiated by Java EE
 	 */
-
-	public PersonRegistry personRegistry;
+	@EJB
+	private transient TravellerRegistry travellerRegistry;
 
 	/**
 	 * @param firstName

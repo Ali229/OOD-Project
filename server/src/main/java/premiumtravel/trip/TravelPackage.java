@@ -2,8 +2,11 @@ package premiumtravel.trip;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.serializer.PackageRegistry;
+import premiumtravel.serializer.RegistryObject;
 
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * <!-- begin-user-doc --> <!--  end-user-doc  -->
@@ -11,7 +14,7 @@ import java.util.Set;
  * @generated
  */
 
-public class TravelPackage implements Product {
+public class TravelPackage implements Product, RegistryObject {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
@@ -102,5 +105,9 @@ public class TravelPackage implements Product {
 		return 0.0;
 	}
 
+	@Override
+	public UUID getID() {
+		return null;
+	}
 }
 

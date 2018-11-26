@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * <!-- begin-user-doc --> <!--  end-user-doc  -->
@@ -44,7 +45,7 @@ public abstract class DataSerializer {
 	 * @ordered
 	 */
 
-	protected abstract void saveData( PeopleTripsTuple data );
+	protected abstract void saveData( SaveData data ) throws IOException;
 
 	/**
 	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
@@ -53,7 +54,7 @@ public abstract class DataSerializer {
 	 * @ordered
 	 */
 
-	protected abstract PeopleTripsTuple loadData();
+	protected abstract SaveData loadData() throws IOException, ClassNotFoundException;
 
 }
 

@@ -5,132 +5,81 @@ import org.apache.logging.log4j.Logger;
 import premiumtravel.billing.Bill;
 import premiumtravel.people.TravelAgent;
 import premiumtravel.people.Traveller;
+import premiumtravel.serializer.RegistryObject;
 import premiumtravel.state.State;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
 /**
- * <!-- begin-user-doc --> <!--  end-user-doc  -->
  *
- * @generated
  */
-
-public class Trip implements Product {
+public class Trip implements Product, RegistryObject {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
+	private static final Set<UUID> tripIDList = new LinkedHashSet<>();
+	private static final long serialVersionUID = -6566205810191038527L;
 
-	private static final Set<Integer> tripIDList = new HashSet<Integer>();
-
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	private final int tripID = 0;
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	public Set<Reservation> reservation;
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	public Set<Traveller> traveller;
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
+	private final UUID tripID;
+	public List<Reservation> reservations;
+	public List<Traveller> travellers;
 	public TravelAgent travelAgent;
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
 	private String thankYouNote;
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
 	private State state;
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
 	 */
-	public Trip() {
+	public Trip () {
 		super();
+
+		// Generate a new ID
+		UUID generatedID = null;
+		boolean idSet = false;
+		while ( !idSet ) {
+			try {
+				generatedID = UUID.randomUUID();
+				tripIDList.add( generatedID );
+				idSet = true;
+			} catch ( UnsupportedOperationException e ) {
+				// Do nothing
+			}
+		}
+
+		this.tripID = generatedID;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public Bill getBill() {
 		// TODO implement me
 		return null;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public String getItenerary() {
 		// TODO implement me
 		return "";
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public int getTripID() {
 		// TODO implement me
 		return 0;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public String getThankYouNote() {
 		// TODO implement me
 		return "";
@@ -149,51 +98,39 @@ public class Trip implements Product {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public List<Traveller> getTravellers() {
 		// TODO implement me
 		return null;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public State getState() {
 		// TODO implement me
 		return null;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public void setState( State state ) {
 		// TODO implement me
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public double getPrice() {
 		// TODO implement me
 		return 0.0;
 	}
 
+	@Override
+	public UUID getID() {
+		return null;
+	}
 }
 

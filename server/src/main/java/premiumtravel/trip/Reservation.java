@@ -3,6 +3,7 @@ package premiumtravel.trip;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,9 +12,10 @@ import java.util.Date;
  * @generated
  */
 
-public class Reservation implements Product {
+public class Reservation implements Product, Serializable {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
+	private static final long serialVersionUID = -3053082615290789288L;
 	/**
 	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *

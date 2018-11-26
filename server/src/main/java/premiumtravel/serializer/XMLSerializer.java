@@ -25,12 +25,12 @@ public class XMLSerializer extends DataSerializer {
 	}
 
 	@Override
-	protected void saveData( PeopleTripsTuple data ) {
+	protected void saveData( SaveData data ) {
 
 	}
 
 	@Override
-	protected PeopleTripsTuple loadData() {
+	protected SaveData loadData() {
 		return null;
 	}
 

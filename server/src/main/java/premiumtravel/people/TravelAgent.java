@@ -2,6 +2,9 @@ package premiumtravel.people;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.serializer.TravelAgentRegistry;
+
+import javax.ejb.EJB;
 
 /**
  *
@@ -10,6 +13,11 @@ public class TravelAgent extends Person {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 	private static final long serialVersionUID = -992437641860585387L;
+
+	/**
+	 * Singleton bean instantiated by Java EE
+	 */
+	@EJB private transient TravelAgentRegistry travelAgentRegistry;
 
 	/**
 	 * Creates a new TravelAgent and <b>automatically adds it to the {@link TravelAgentRegistry}</b>.
@@ -23,7 +31,6 @@ public class TravelAgent extends Person {
 		logger.trace(
 				String.format( "Creating new TravelAgent with first name: %s, last name: %s, and phone number: %s",
 						firstName, lastName, phoneNumber ) );
-		TravelAgentRegistry.addTravelAgent( this );
 	}
 }
 
