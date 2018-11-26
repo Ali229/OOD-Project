@@ -1,9 +1,5 @@
 package premiumtravel.rest;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import premiumtravel.cache.TravelAgentRegistry;
 import premiumtravel.people.PersonFactory;
 import premiumtravel.people.TravelAgent;
@@ -20,18 +16,7 @@ import java.util.HashMap;
  * @version 1.0
  */
 @Path( "/travel-agent" )
-public class TravelAgentRESTController {
-
-	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
-	private static final Gson gson;
-
-	static {
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.enableComplexMapKeySerialization();
-		gsonBuilder.generateNonExecutableJson();
-		gsonBuilder.serializeNulls();
-		gson = gsonBuilder.create();
-	}
+public class TravelAgentRESTController extends AbstractRESTController {
 
 	/**
 	 * Singleton bean instantiated by Java EE
@@ -43,6 +28,12 @@ public class TravelAgentRESTController {
 	@EJB private PersonFactory personFactory;
 
 	@GET
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response getTravelAgents() {
+		return Response.ok( gson.toJson( travelAgentRegistry.getAll() ) ).build();
+	}
+
+	@GET
 	@Path( "{travel-agent-id}" )
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response getTravelAgent( @DefaultValue( "-1" ) @PathParam( "travel-agent-id" ) String travelAgentID ) {
@@ -50,8 +41,7 @@ public class TravelAgentRESTController {
 		for ( TravelAgent agent : travelAgentRegistry.getAll() ) {
 			if ( agent.getPersonID().equals( travelAgentID ) ) {
 				logger.error( gson.toJson( agent ) );
-				return Response.ok( Json.createObjectBuilder().add( "travel-agents", gson.toJson( agent ) ).build() )
-						.build();
+				return Response.ok( gson.toJson( agent ) ).build();
 			}
 		}
 		return Response.status( 400, "No Travel Agent with that ID exists." ).build();
