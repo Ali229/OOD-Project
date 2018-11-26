@@ -5,10 +5,9 @@ import org.apache.logging.log4j.Logger;
 import premiumtravel.billing.Bill;
 import premiumtravel.people.TravelAgent;
 import premiumtravel.people.Traveller;
-import premiumtravel.serializer.RegistryObject;
+import premiumtravel.cache.RegistryObject;
 import premiumtravel.state.State;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**

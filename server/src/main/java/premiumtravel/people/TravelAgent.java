@@ -2,7 +2,7 @@ package premiumtravel.people;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import premiumtravel.serializer.TravelAgentRegistry;
+import premiumtravel.cache.TravelAgentRegistry;
 
 import javax.ejb.EJB;
 

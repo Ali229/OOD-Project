@@ -2,8 +2,8 @@ package premiumtravel.trip;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import premiumtravel.serializer.PackageRegistry;
-import premiumtravel.serializer.RegistryObject;
+import premiumtravel.cache.PackageRegistry;
+import premiumtravel.cache.RegistryObject;
 
 import java.util.Set;
 import java.util.UUID;

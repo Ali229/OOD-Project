@@ -1,4 +1,4 @@
-package premiumtravel.serializer;
+package premiumtravel.cache;
 
 import premiumtravel.people.TravelAgent;
 

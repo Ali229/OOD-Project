@@ -2,7 +2,7 @@ package premiumtravel.people;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import premiumtravel.serializer.RegistryObject;
+import premiumtravel.cache.RegistryObject;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
