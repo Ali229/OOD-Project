@@ -69,6 +69,24 @@ public abstract class Registry<T extends RegistryObject> extends Observable impl
 	}
 
 	/**
+	 * Retrieves the registered item with the given {@code id}.
+	 *
+	 * @param id The {@link String} ID of the {@link RegistryObject} to be retrieved.
+	 * @return The {@link RegistryObject} whose {@link UUID} corresponds with the given parameter if it exists, or
+	 * {@code null} if no object is registered with that ID.
+	 */
+	@Lock( LockType.READ )
+	public T get( String id ) {
+		// This is inefficient. TODO Find if a hashmap or tree might be better
+		for ( T t : this.registryList ) {
+			if ( t.getID().toString().equals( id ) ) {
+				return t;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Adds a new {@link T} to the registry.
 	 *
 	 * @param t The new {@link T} to be added.
