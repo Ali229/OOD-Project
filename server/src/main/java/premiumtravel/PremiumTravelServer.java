@@ -2,9 +2,7 @@ package premiumtravel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import premiumtravel.rest.PersonRESTController;
-import premiumtravel.rest.TravelAgentRESTController;
-import premiumtravel.rest.TripRESTController;
+import premiumtravel.rest.*;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -30,6 +28,8 @@ public class PremiumTravelServer extends Application {
 		h.add( TripRESTController.class );
 		h.add( TravelAgentRESTController.class );
 		h.add( PersonRESTController.class );
+		h.add( TravellerRESTController.class );
+		h.add( PackageRESTController.class );
 		return h;
 	}
 
