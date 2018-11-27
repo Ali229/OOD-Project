@@ -16,7 +16,6 @@ export class ResourcesService {
     return {
       headers: new HttpHeaders({
         'Cache-Control': 'no-cache',
-        'Authorization': 'Bearer ' + localStorage.getItem('auth_token'),
         'Access-Control-Allow-Origin': '*',
         'Accept': '*/*'
       })
@@ -28,7 +27,6 @@ export class ResourcesService {
       headers: new HttpHeaders({
         'Cache-Control': 'no-cache',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('auth_token'),
         'Access-Control-Allow-Origin': '*'
       })
     };
