@@ -35,8 +35,7 @@ export class ResourcesService {
   }
 
   public getAllAgentsObservable() {
-    //this.backendAddress + 'travel-agent'
-    return this.http.get("https://markzeagler.com/postit-backend/", this.getGETJSONHeaders());
+    return this.http.get(this.backendAddress + 'travel-agent', this.getGETJSONHeaders());
   }
 
   public getAgent(id: string) {
