@@ -30,6 +30,7 @@ public class PremiumTravelServer extends Application {
 		h.add( PersonRESTController.class );
 		h.add( TravellerRESTController.class );
 		h.add( PackageRESTController.class );
+		h.add( PlaceRESTController.class );
 		return h;
 	}
 
