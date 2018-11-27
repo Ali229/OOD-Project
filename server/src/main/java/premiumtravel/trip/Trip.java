@@ -2,12 +2,15 @@ package premiumtravel.trip;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import premiumtravel.billing.Bill;
 import premiumtravel.cache.RegistryObject;
+import premiumtravel.cache.TravelAgentRegistry;
 import premiumtravel.people.TravelAgent;
 import premiumtravel.people.Traveller;
-import premiumtravel.state.State;
+import premiumtravel.state.AddTravelersStateController;
+import premiumtravel.state.StateController;
+import premiumtravel.state.States;
 
+import javax.ejb.EJB;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,19 +28,23 @@ public class Trip implements Product, RegistryObject {
 	 */
 	private static final Set<UUID> tripIDList = new LinkedHashSet<>();
 	private static final long serialVersionUID = -6566205810191038527L;
-
 	private final UUID tripID;
-	public List<Reservation> reservations;
-	public List<Traveller> travellers;
-	public TravelAgent travelAgent;
+	@EJB private TravelAgentRegistry travelAgentRegistry;
+	private List<Reservation> reservations;
+	private List<Traveller> travellers;
+	private UUID travelAgentID;
 	private String thankYouNote;
-	private State state;
+	private States state;
+	private transient StateController stateController;
 
 	/**
 	 *
 	 */
-	public Trip() {
+	public Trip( TravelAgent travelAgent ) {
 		super();
+		this.state = States.ADD_TRAVELLERS;
+		this.stateController = new AddTravelersStateController( this );
+		this.travelAgentID = travelAgent.getID();
 
 		// Generate a new ID
 		UUID generatedID = null;
@@ -55,78 +62,72 @@ public class Trip implements Product, RegistryObject {
 		this.tripID = generatedID;
 	}
 
-	/**
-	 *
-	 */
-	public Bill getBill() {
-		// TODO implement me
-		return null;
+	public UUID getTripID() {
+		return tripID;
 	}
 
-	/**
-	 *
-	 */
-	public String getItenerary() {
-		// TODO implement me
-		return "";
+	public List<Reservation> getReservations() {
+		return reservations;
 	}
 
-	/**
-	 *
-	 */
-	public int getTripID() {
-		// TODO implement me
-		return 0;
+	public void setReservations( List<Reservation> reservations ) {
+		if ( this.state == States.ADD_PACKAGES ) {
+			this.reservations = reservations;
+		} else {
+			throw new RuntimeException( "This trip is currently in the " + this.state.toString()
+					+ " state and cannot have new packages added." );
+		}
 	}
 
-	/**
-	 *
-	 */
-	public String getThankYouNote() {
-		// TODO implement me
-		return "";
+	public List<Traveller> getTravellers() {
+		return travellers;
 	}
 
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
+	public void setTravellers( List<Traveller> travellers ) {
+		if ( this.state == States.ADD_TRAVELLERS ) {
+			this.travellers = travellers;
+		} else {
+			throw new RuntimeException( "This trip is currently in the " + this.state.toString()
+					+ " state and cannot have new travellers added." );
+		}
+	}
 
 	public TravelAgent getTravelAgent() {
-		// TODO implement me
-		return null;
+		return this.travelAgentRegistry.get( this.travelAgentID );
+	}
+
+	public String getThankYouNote() {
+		return thankYouNote;
+	}
+
+	public void setThankYouNote( String thankYouNote ) {
+		if ( this.state == States.THANK_YOU ) {
+			this.thankYouNote = thankYouNote;
+		} else {
+			throw new RuntimeException( "This trip is currently in the " + this.state.toString()
+					+ " state and cannot have a thank you note added." );
+		}
+	}
+
+	public States getState() {
+		return state;
+	}
+
+	public void setState( States state ) {
+		this.state = state;
 	}
 
 	/**
 	 *
 	 */
-	public List<Traveller> getTravellers() {
-		// TODO implement me
-		return null;
-	}
-
-	/**
-	 *
-	 */
-	public State getState() {
-		// TODO implement me
-		return null;
-	}
-
-	/**
-	 *
-	 */
-	public void setState( State state ) {
-		// TODO implement me
+	public StateController getStateController() {
+		return this.stateController;
 	}
 
 	/**
 	 *
 	 */
 	public double getPrice() {
-		// TODO implement me
 		return 0.0;
 	}
 
