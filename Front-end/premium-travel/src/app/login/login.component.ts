@@ -9,6 +9,7 @@ import {ResourcesService} from '../services/resources.service';
 export class LoginComponent implements OnInit {
 
   private agentList: Agent[];
+  selectedOption: string;
 
   constructor(private resService: ResourcesService) {
   }
@@ -18,6 +19,10 @@ export class LoginComponent implements OnInit {
       this.agentList = response;
       console.log(this.agentList);
     });
+  }
+
+  login() {
+    localStorage.setItem('agent', this.selectedOption);
   }
 
 }
