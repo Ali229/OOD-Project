@@ -4,15 +4,15 @@ import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {AppRoutingModule, routingComponents} from './app-routing.module';
-import {ResourcesService} from "./services/resources.service";
-import {HttpClientModule} from "@angular/common/http";
+import {ResourcesService} from './services/resources.service';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    routingComponents
+    routingComponents,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),

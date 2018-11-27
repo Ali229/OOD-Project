@@ -6,7 +6,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class ResourcesService {
 
-  private readonly backendAddress: string = 'https://premium-travel.markzeagler.com/resources/';
+  private readonly backendAddress: string = 'localhost:8080/premium-travel-backend/';   // 'https://premium-travel.markzeagler.com/resources/';
 
   constructor(private http: HttpClient) {
 

@@ -5,25 +5,31 @@
       Itinerary Information
     </h3>
     <div style="margin-top: 50px">
-      <p>
+      <p *ngIf="travelers">
         <button class="bt" mdbBtn type="button" color="unique" (click)="showTravelersModal()" mdbWavesEffect>Add
           Travelers
         </button>
       </p>
-      <p>
-        <button class="bt" mdbBtn type="button" color="unique" mdbWavesEffect>Add Packages</button>
+      <p *ngIf="packages">
+        <button class="bt" mdbBtn type="button" color="unique" (click)="showPackageModal()" mdbWavesEffect>Add
+          Packages
+        </button>
       </p>
-      <p>
-        <button class="bt" mdbBtn type="button" color="unique" mdbWavesEffect>Choose Payment</button>
+      <p *ngIf="paymentPerson">
+        <button class="bt" mdbBtn type="button" color="unique" (click)="showPaymentPersonModal()" mdbWavesEffect>Choose
+          Payment
+        </button>
       </p>
-      <p>
-        <button class="bt" mdbBtn type="button" color="unique" mdbWavesEffect>Choose Payment Type</button>
+      <p *ngIf="paymentType">
+        <button class="bt" mdbBtn type="button" color="unique" (click)="showPaymentTypeModal()" mdbWavesEffect>Choose
+          Payment Type
+        </button>
       </p>
     </div>
   </div>
 </div>
 
-
+<!-------------------------------------------------- Modal to add travelers ------------------------------------------->
 <div mdbModal #travelersModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
      aria-labelledby="mytravelersModalLabel"
      aria-hidden="true">
@@ -70,8 +76,161 @@
         <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                 (click)="travelersModal.hide()" mdbWavesEffect>Close
         </button>
-        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Done</button>
+        <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="statePackage()"
+                mdbWavesEffect>Done
+        </button>
       </div>
     </div>
   </div>
 </div>
+<!-------------------------------------------------- End Modal to add travelers --------------------------------------->
+
+<!-------------------------------------------------- Modal to add package --------------------------------------------->
+<div mdbModal #packageModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mypackageModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="packageModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel1">Add Package</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-row">
+            <div class="col">
+              FROM:
+            </div>
+            <div class="col">
+              <select class="browser-default custom-select">
+                <option selected value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col">
+              TO:
+            </div>
+            <div class="col">
+              <select class="browser-default custom-select">
+                <option selected value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col">
+              <button mdbBtn type="button" color="unique" mdbWavesEffect>Calculate
+              </button>
+            </div>
+            <div class="col">
+              Cost: $0
+            </div>
+            <div class="col">
+              Duration: 0 Hours
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                (click)="packageModal.hide()" mdbWavesEffect>Close
+        </button>
+        <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="statePaymentPerson()"
+                mdbWavesEffect>Done
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------------------------------------- End Modal to add package ----------------------------------------->
+
+<!-------------------------------------------------- Modal to add payment person -------------------------------------->
+<div mdbModal #paymentPersonModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mypackageModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="paymentPersonModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel2">Select Payment Person</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-row">
+            <div class="col">
+              <select class="browser-default custom-select">
+                <option selected value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                (click)="paymentPersonModal.hide()" mdbWavesEffect>Close
+        </button>
+        <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="statePaymentType()"
+                mdbWavesEffect>Choose
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------------------------------------- End Modal to add payment person ---------------------------------->
+
+<!-------------------------------------------------- Modal to add payment type -------------------------------------->
+<div mdbModal #paymentTypeModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mypackageModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="paymentTypeModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel3">Select Payment Type</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-row">
+            <div class="col">
+              <select class="browser-default custom-select">
+                <option selected value="1">Credit Card</option>
+                <option value="2">Check/option>
+                <option value="3">Cash</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                (click)="paymentTypeModal.hide()" mdbWavesEffect>Close
+        </button>
+        <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="stateMadeTrip()"
+                mdbWavesEffect>Choose
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------------------------------------- End Modal to add payment type ---------------------------------->
