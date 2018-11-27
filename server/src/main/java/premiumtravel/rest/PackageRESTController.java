@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
  * @version 1.0
  */
 @Path( "/package" )
-public class PackageRestController extends AbstractRESTController {
+public class PackageRESTController extends AbstractRESTController {
 
 	/**
 	 * Singleton bean instantiated by Java EE
