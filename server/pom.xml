@@ -139,6 +139,11 @@
             <artifactId>ini4j</artifactId>
             <version>0.5.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.ebaysf.web</groupId>
+            <artifactId>cors-filter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
         <!-- testing -->
         <!--<dependency>-->
