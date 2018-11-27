@@ -19,7 +19,7 @@ public enum States {
 		}
 	} ),
 	THANK_YOU( ThankYouStateController::new ),
-	SHOW_ITENERARY( FinalStateController::new );
+	SHOW_ITINERARY( FinalStateController::new );
 
 	private final Function<Trip, StateController> stateControllerFunction;
 
