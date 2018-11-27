@@ -31,9 +31,9 @@ public class PackageFactory {
 
 	public TravelPackage getPackage( Place placeFrom, Place placeTo, TransportType transportType ) {
 		Random random = new Random();
-		BigDecimal price = new BigDecimal( random.nextDouble() );
+		BigDecimal price = new BigDecimal( Math.abs( random.nextDouble() * 100000 ) );
 		price = price.setScale( 2, RoundingMode.CEILING );
-		return new TravelPackage( placeFrom, placeTo, transportType, random.nextInt(), price );
+		return new TravelPackage( placeFrom, placeTo, transportType, random.nextInt( 48 ), price );
 	}
 
 	public List<TravelPackage> generatePackages( List<Place> places ) {
