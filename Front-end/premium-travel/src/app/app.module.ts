@@ -4,9 +4,9 @@ import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {AppRoutingModule, routingComponents} from './app-routing.module';
-import { MainpageComponent } from './mainpage/mainpage.component';
 import {ResourcesService} from "./services/resources.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {BasicAuthInterceptor} from "./_helpers/basic-auth.interceptor";
 
 
 @NgModule({
@@ -22,7 +22,8 @@ import {HttpClientModule} from "@angular/common/http";
     HttpClientModule
   ],
   providers: [
-    ResourcesService
+    ResourcesService,
+    {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
