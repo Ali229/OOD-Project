@@ -24,6 +24,8 @@ import java.util.Date;
 @Singleton
 @ApplicationScoped
 @ConcurrencyManagement( ConcurrencyManagementType.CONTAINER )
+@DependsOn( { "PackageRegistry", "PersonRegistry", "PlaceRegistry", "TravelAgentRegistry", "TravellerRegistry",
+					"TripRegistry" } )
 public class Cache {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
@@ -55,7 +57,6 @@ public class Cache {
 	 */
 	@PostConstruct
 	void init() {
-		logger.error( getClass().getResource( "/config.ini" ).toString() );
 		try {
 			ini = new Wini( getClass().getResourceAsStream( "/config.ini" ) );
 		} catch ( Exception e ) {
@@ -136,10 +137,10 @@ public class Cache {
 
 	private void reloadAll() throws IOException, ClassNotFoundException {
 		SaveData saveData = serializer.loadData();
-		this.personRegistry.resetTravelAgents( saveData.people );
-		this.travelAgentRegistry.resetTravelAgents( saveData.travelAgents );
-		this.travellerRegistry.resetTravelAgents( saveData.travellers );
-		this.tripRegistry.resetTravelAgents( saveData.trips );
+		this.personRegistry.resetRegistry( saveData.people );
+		this.travelAgentRegistry.resetRegistry( saveData.travelAgents );
+		this.travellerRegistry.resetRegistry( saveData.travellers );
+		this.tripRegistry.resetRegistry( saveData.trips );
 	}
 }
 

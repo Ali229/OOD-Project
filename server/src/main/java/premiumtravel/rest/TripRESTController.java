@@ -53,7 +53,7 @@ public class TripRESTController extends AbstractRESTController {
 	public Response getTrip( @DefaultValue( "-1" ) @PathParam( "trip-id" ) String tripID ) {
 		logger.debug( "GET called on /trip/" + tripID );
 		Trip trip = this.tripRegistry.get( tripID );
-		return Response.noContent().build();
+		return Response.ok( gson.toJson( trip ) ).build();
 	}
 
 	@PUT
@@ -67,6 +67,26 @@ public class TripRESTController extends AbstractRESTController {
 			if ( trip.getID().toString().equals( tripID ) ) {
 				try {
 					trip.getStateController().accept( data );
+					return Response.accepted().build();
+				} catch ( RuntimeException e ) {
+					return Response.status( 400, e.getMessage() ).build();
+				}
+			}
+		}
+		return Response.status( 404, "No trip with the ID of \"" + tripID + "\" exists." ).build();
+	}
+
+	@POST
+	@Path( "{trip-id}" )
+	@Consumes( MediaType.APPLICATION_JSON )
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response postTrip( @DefaultValue( "-1" ) @PathParam( "trip-id" ) String tripID,
+			HashMap<String, String> data ) {
+		logger.debug( "POST called on /trip/" + tripID );
+		for ( Trip trip : this.tripRegistry.getAll() ) {
+			if ( trip.getID().toString().equals( tripID ) ) {
+				try {
+					trip.getStateController().nextState();
 					return Response.accepted().build();
 				} catch ( RuntimeException e ) {
 					return Response.status( 400, e.getMessage() ).build();

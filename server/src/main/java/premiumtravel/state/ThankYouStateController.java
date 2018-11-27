@@ -17,6 +17,11 @@ public class ThankYouStateController extends StateController {
 	}
 
 	@Override
+	public void nextState() {
+
+	}
+
+	@Override
 	public void accept( HashMap<String, String> stringStringHashMap ) {
 
 	}

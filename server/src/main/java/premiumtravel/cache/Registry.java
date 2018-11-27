@@ -18,9 +18,9 @@ public abstract class Registry<T extends RegistryObject> extends Observable impl
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
 	private static final long serialVersionUID = -5641676899131094013L;
-	final List<T> registryList;
+	protected final List<T> registryList;
 
-	Registry() {
+	protected Registry() {
 		registryList = new LinkedList<>();
 	}
 
@@ -33,7 +33,7 @@ public abstract class Registry<T extends RegistryObject> extends Observable impl
 	 * @param newList
 	 */
 	@Lock( LockType.WRITE )
-	void resetTravelAgents( Collection<T> newList ) {
+	protected void resetRegistry( Collection<T> newList ) {
 		this.registryList.clear();
 		if ( newList != null ) {
 			this.registryList.addAll( newList );

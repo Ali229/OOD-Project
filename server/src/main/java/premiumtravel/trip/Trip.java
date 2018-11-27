@@ -4,17 +4,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import premiumtravel.cache.RegistryObject;
 import premiumtravel.cache.TravelAgentRegistry;
+import premiumtravel.cache.TravellerRegistry;
 import premiumtravel.people.TravelAgent;
 import premiumtravel.people.Traveller;
-import premiumtravel.state.AddTravelersStateController;
 import premiumtravel.state.StateController;
 import premiumtravel.state.States;
 
 import javax.ejb.EJB;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  *
@@ -22,28 +20,32 @@ import java.util.UUID;
 public class Trip implements Product, RegistryObject {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
-
-	/**
-	 *
-	 */
 	private static final Set<UUID> tripIDList = new LinkedHashSet<>();
 	private static final long serialVersionUID = -6566205810191038527L;
+
 	private final UUID tripID;
-	@EJB private TravelAgentRegistry travelAgentRegistry;
+
+	@EJB private transient TravelAgentRegistry travelAgentRegistry;
+	@EJB private transient TravellerRegistry travellerRegistry;
+
 	private List<Reservation> reservations;
-	private List<Traveller> travellers;
+	private List<UUID> travellerIDs = new LinkedList<>();
 	private UUID travelAgentID;
 	private String thankYouNote;
 	private States state;
+
+	// Reinitialized by getter if null (state must be set)
 	private transient StateController stateController;
 
 	/**
+	 * Creates a new Trip, organized by the given {@link TravelAgent}.
 	 *
+	 * @param travelAgent The agent responsible for the new trip.
 	 */
 	public Trip( TravelAgent travelAgent ) {
 		super();
 		this.state = States.ADD_TRAVELLERS;
-		this.stateController = new AddTravelersStateController( this );
+		getStateController(); // To initialize controller
 		this.travelAgentID = travelAgent.getID();
 
 		// Generate a new ID
@@ -71,25 +73,19 @@ public class Trip implements Product, RegistryObject {
 	}
 
 	public void setReservations( List<Reservation> reservations ) {
-		if ( this.state == States.ADD_PACKAGES ) {
-			this.reservations = reservations;
-		} else {
-			throw new RuntimeException( "This trip is currently in the " + this.state.toString()
-					+ " state and cannot have new packages added." );
-		}
+		this.reservations = reservations;
 	}
 
 	public List<Traveller> getTravellers() {
+		List<Traveller> travellers = new LinkedList<>();
+		for ( UUID travellerID : this.travellerIDs ) {
+			travellers.add( travellerRegistry.get( travellerID ) );
+		}
 		return travellers;
 	}
 
-	public void setTravellers( List<Traveller> travellers ) {
-		if ( this.state == States.ADD_TRAVELLERS ) {
-			this.travellers = travellers;
-		} else {
-			throw new RuntimeException( "This trip is currently in the " + this.state.toString()
-					+ " state and cannot have new travellers added." );
-		}
+	public void addTraveller( Traveller traveller ) {
+		this.travellerIDs.add( traveller.getID() );
 	}
 
 	public TravelAgent getTravelAgent() {
@@ -101,12 +97,7 @@ public class Trip implements Product, RegistryObject {
 	}
 
 	public void setThankYouNote( String thankYouNote ) {
-		if ( this.state == States.THANK_YOU ) {
-			this.thankYouNote = thankYouNote;
-		} else {
-			throw new RuntimeException( "This trip is currently in the " + this.state.toString()
-					+ " state and cannot have a thank you note added." );
-		}
+		this.thankYouNote = thankYouNote;
 	}
 
 	public States getState() {
@@ -121,14 +112,17 @@ public class Trip implements Product, RegistryObject {
 	 *
 	 */
 	public StateController getStateController() {
+		if ( this.stateController == null ) {
+			this.stateController = this.state.getStateController( this );
+		}
 		return this.stateController;
 	}
 
 	/**
 	 *
 	 */
-	public double getPrice() {
-		return 0.0;
+	public BigDecimal getPrice() {
+		return new BigDecimal( 0.0 );
 	}
 
 	@Override

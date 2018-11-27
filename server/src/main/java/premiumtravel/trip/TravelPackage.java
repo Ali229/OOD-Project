@@ -2,112 +2,79 @@ package premiumtravel.trip;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import premiumtravel.cache.PackageRegistry;
 import premiumtravel.cache.RegistryObject;
 
+import java.math.BigDecimal;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 
 /**
- * <!-- begin-user-doc --> <!--  end-user-doc  -->
  *
- * @generated
  */
-
 public class TravelPackage implements Product, RegistryObject {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
+	private static final long serialVersionUID = -1692210919512291541L;
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
+	 * Used to verify that each ID is unique.
 	 */
+	private transient static Set<UUID> registeredIDs = new LinkedHashSet<>();
 
-	public final double price = 0.0;
+	private final Place fromPlace;
+	private final Place toPlace;
+	private final TransportType transportType;
+	private final int hoursOfTravelTime;
+	private final BigDecimal price;
+
+	private final UUID packageID;
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
+	public TravelPackage( Place fromPlace, Place toPlace, TransportType transportType, int hoursOfTravelTime,
+			BigDecimal price ) {
+		this.fromPlace = fromPlace;
+		this.toPlace = toPlace;
+		this.transportType = transportType;
+		this.hoursOfTravelTime = hoursOfTravelTime;
+		this.price = price;
 
-	public final int hoursOfTravelTime = 0;
+		// Generate a new ID
+		UUID generatedID = null;
+		boolean idSet = false;
+		while ( !idSet ) {
+			try {
+				generatedID = UUID.randomUUID();
+				registeredIDs.add( generatedID );
+				idSet = true;
+			} catch ( UnsupportedOperationException e ) {
+				// Do nothing
+			}
+		}
 
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	public final TransportType transportType = TransportType.PrivateJet;
-
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	public Set<Reservation> reservation;
-
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	public Place place;
-
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	public PackageRegistry packageList;
-
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 */
-	public TravelPackage() {
-		super();
+		this.packageID = generatedID;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public String toString() {
 		// TODO implement me
 		return "";
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
-	public double getPrice() {
-		// TODO implement me
-		return 0.0;
+	public BigDecimal getPrice() {
+		return this.price;
 	}
 
 	@Override
 	public UUID getID() {
-		return null;
+		return this.packageID;
 	}
 }
 

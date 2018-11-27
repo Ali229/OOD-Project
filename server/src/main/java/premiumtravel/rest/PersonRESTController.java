@@ -2,14 +2,15 @@ package premiumtravel.rest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.cache.PersonRegistry;
 import premiumtravel.people.Person;
 import premiumtravel.people.PersonFactory;
 
 import javax.ejb.EJB;
 import javax.json.Json;
-import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.HashMap;
 
 /**
@@ -17,29 +18,45 @@ import java.util.HashMap;
  * @version 1.0
  */
 @Path( "/person" )
-public class PersonRESTController {
+public class PersonRESTController extends AbstractRESTController {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
 	@EJB private PersonFactory personFactory;
+	/**
+	 * Singleton bean instantiated by Java EE
+	 */
+	@EJB private PersonRegistry personRegistry;
+
+	@GET
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response getPeople() {
+		return Response.ok( gson.toJson( personRegistry.getAll() ) ).build();
+	}
 
 	@GET
 	@Path( "{person-id}" )
 	@Produces( MediaType.APPLICATION_JSON )
-	public JsonObject getTravelAgent( @DefaultValue( "-1" ) @PathParam( "person-id" ) String personID ) {
-		logger.debug( "GET called on /person/" + personID );
-		return Json.createObjectBuilder().add( "bill", "stuff" ).build();
+	public Response getPerson( @DefaultValue( "-1" ) @PathParam( "person-id" ) String personID ) {
+		logger.trace( "GET called on /person/" + personID );
+		for ( Person person : personRegistry.getAll() ) {
+			if ( person.getPersonID().equals( personID ) ) {
+				return Response.ok( gson.toJson( person ) ).build();
+			}
+		}
+		return Response.status( 400, "No Person with that ID exists." ).build();
 	}
 
 	@POST
 	@Consumes( MediaType.APPLICATION_JSON )
 	@Produces( MediaType.APPLICATION_JSON )
-	public JsonObject postTravelAgent( HashMap<String, String> data ) {
-		logger.debug( "POST called on /person with data: " + data.toString() );
-		Person person = this.personFactory
-				.getGuest( data.get( "firstName" ), data.get( "lastName" ), data.get( "phoneNumber" ) );
-		return Json.createObjectBuilder().add( "person_id", person.getPersonID() ).build();
+	public Response postTravelAgent( HashMap<String, String> data ) {
+		logger.trace( "POST called on /person with data: " + data.toString() );
+		Person guest = this.personFactory.getPerson( PersonFactory.PersonType.SystemGuest, data.get( "firstName" ), data.get( "lastName" ),
+				data.get( "phoneNumber" ) );//data.firstName, data.lastName, data.phoneNumber );
+		return Response.accepted( Json.createObjectBuilder().add( "person_id", guest.getPersonID() ).build() )
+				.build();
 	}
 }

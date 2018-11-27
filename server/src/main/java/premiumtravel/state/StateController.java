@@ -13,12 +13,18 @@ import java.util.function.Consumer;
 public abstract class StateController implements Consumer<HashMap<String, String>> {
 
 	static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
+	final Trip trip;
 
 	/**
 	 *
 	 */
 	StateController( Trip trip ) {
-		super();
+		this.trip = trip;
 	}
+
+	/**
+	 * Attempts to progress to the next state, or throws a {@link RuntimeException} if unable to.
+	 */
+	public abstract void nextState();
 }
 

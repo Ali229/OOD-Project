@@ -1,6 +1,7 @@
 package premiumtravel.rest;
 
 import premiumtravel.cache.TravelAgentRegistry;
+import premiumtravel.people.Person;
 import premiumtravel.people.PersonFactory;
 import premiumtravel.people.TravelAgent;
 
@@ -40,7 +41,6 @@ public class TravelAgentRESTController extends AbstractRESTController {
 		logger.trace( "GET called on /travel-agent/" + travelAgentID );
 		for ( TravelAgent agent : travelAgentRegistry.getAll() ) {
 			if ( agent.getPersonID().equals( travelAgentID ) ) {
-				logger.error( gson.toJson( agent ) );
 				return Response.ok( gson.toJson( agent ) ).build();
 			}
 		}
@@ -52,8 +52,9 @@ public class TravelAgentRESTController extends AbstractRESTController {
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response postTravelAgent( HashMap<String, String> data ) {
 		logger.trace( "POST called on /travel-agent with data: " + data.toString() );
-		TravelAgent travelAgent = this.personFactory.getTravelAgent( data.get( "firstName" ), data.get( "lastName" ),
-				data.get( "phoneNumber" ) );//data.firstName, data.lastName, data.phoneNumber );
+		Person travelAgent = this.personFactory
+				.getPerson( PersonFactory.PersonType.TravelAgent, data.get( "firstName" ), data.get( "lastName" ),
+						data.get( "phoneNumber" ) );//data.firstName, data.lastName, data.phoneNumber );
 		return Response.accepted( Json.createObjectBuilder().add( "person_id", travelAgent.getPersonID() ).build() )
 				.build();
 	}

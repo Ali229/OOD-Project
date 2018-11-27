@@ -5,14 +5,14 @@ import premiumtravel.trip.Trip;
 import java.util.HashMap;
 
 /**
- *
+ * @author Mark Zeagler
+ * @version 1.0
  */
-public class FinalStateController extends StateController {
-
+public class SelectPaymentStateController extends StateController {
 	/**
-	 *
+	 * @param trip
 	 */
-	FinalStateController( Trip trip ) {
+	SelectPaymentStateController( Trip trip ) {
 		super( trip );
 	}
 
@@ -26,4 +26,3 @@ public class FinalStateController extends StateController {
 
 	}
 }
-

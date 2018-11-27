@@ -18,7 +18,7 @@ public class Place implements RegistryObject {
 	/**
 	 *
 	 */
-	public Place(String name) {
+	Place(String name) {
 		this.name = name;
 	}
 
@@ -27,4 +27,3 @@ public class Place implements RegistryObject {
 		return null;
 	}
 }
-

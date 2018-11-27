@@ -2,6 +2,8 @@ package premiumtravel.trip;
 
 import premiumtravel.billing.Bill;
 
+import java.math.BigDecimal;
+
 /**
  * <!-- begin-user-doc --> <!--  end-user-doc  -->
  *
@@ -24,7 +26,7 @@ public interface Product {
 	 * @ordered
 	 */
 
-	public double getPrice();
+	public BigDecimal getPrice();
 
 }
 
