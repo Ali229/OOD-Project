@@ -31,20 +31,21 @@ public class TravelAgentRESTController extends AbstractRESTController {
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response getTravelAgents() {
-		return Response.ok( gson.toJson( travelAgentRegistry.getAll() ) ).build();
+		logger.error( "GET called on /travel-agent" );
+		return addHeaders( Response.ok( gson.toJson( travelAgentRegistry.getAll() ) ) ).build();
 	}
 
 	@GET
 	@Path( "{travel-agent-id}" )
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response getTravelAgent( @DefaultValue( "-1" ) @PathParam( "travel-agent-id" ) String travelAgentID ) {
-		logger.trace( "GET called on /travel-agent/" + travelAgentID );
+		logger.error( "GET called on /travel-agent/" + travelAgentID );
 		for ( TravelAgent agent : travelAgentRegistry.getAll() ) {
 			if ( agent.getPersonID().equals( travelAgentID ) ) {
-				return Response.ok( gson.toJson( agent ) ).build();
+				return addHeaders( Response.ok( gson.toJson( agent ) ) ).build();
 			}
 		}
-		return Response.status( 400, "No Travel Agent with that ID exists." ).build();
+		return addHeaders( Response.status( 400, "No Travel Agent with that ID exists." ) ).build();
 	}
 
 	@POST
@@ -55,7 +56,8 @@ public class TravelAgentRESTController extends AbstractRESTController {
 		Person travelAgent = this.personFactory
 				.getPerson( PersonFactory.PersonType.TravelAgent, data.get( "firstName" ), data.get( "lastName" ),
 						data.get( "phoneNumber" ) );//data.firstName, data.lastName, data.phoneNumber );
-		return Response.accepted( Json.createObjectBuilder().add( "person_id", travelAgent.getPersonID() ).build() )
+		return addHeaders(
+				Response.accepted( Json.createObjectBuilder().add( "person_id", travelAgent.getPersonID() ).build() ) )
 				.build();
 	}
 }
