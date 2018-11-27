@@ -23,4 +23,5 @@ Collaboration for OOD Project
 - Navigate the command line to the "server" directory within the project.
 - Execute ```mvn package```
 - Start glassfish with ```asadmin start-domain```
-- Deploy the Maven-produced package by moving *project_dir*\server\target\premium-travel-backend.war to *glassfish_install_dir*\glassfish\domains\\*domain*\autodeploy\
+- (Easy deploy) Autodeploy the Maven-produced package by moving *<project_dir>*\server\target\premium-travel-backend.war to *<glassfish_install_dir>*\glassfish\domains\\*\<domain>*\autodeploy\
+- Deploy the Maven-produced package by executing ```asadmin deploy <project_dir>\server\target\premium-travel-backend.war```
