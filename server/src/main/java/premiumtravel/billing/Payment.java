@@ -4,99 +4,46 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import premiumtravel.people.Person;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+
 /**
- * <!-- begin-user-doc --> <!--  end-user-doc  -->
  *
- * @generated
  */
-
-public abstract class Payment {
+public abstract class Payment implements Serializable {
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
+	private static final long serialVersionUID = -710050998840868000L;
 
-	public Bill bill;
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	public Person person;
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	private double amountPaid;
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	private Person payer;
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	private PaymentType type;
+	protected final BigDecimal amountPaid;
+	protected final Person payer;
+	protected final PaymentType type;
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
-	Payment( PaymentType type, double amountPaid ) {
-		super();
-		// TODO construct me
+	Payment( PaymentType type, BigDecimal amountPaid, Person payer ) {
+		this.type = type;
+		this.amountPaid = amountPaid;
+		this.payer = payer;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public PaymentType getType() {
-		// TODO implement me
-		return PaymentType.Check;
+		return this.type;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
-	public double getAmountPaid() {
-		// TODO implement me
-		return 0.0;
+	public BigDecimal getAmountPaid() {
+		return this.amountPaid;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public abstract String toString();
-
 }
 

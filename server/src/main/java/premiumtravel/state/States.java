@@ -1,5 +1,6 @@
 package premiumtravel.state;
 
+import premiumtravel.billing.PaymentType;
 import premiumtravel.trip.Trip;
 
 import java.util.function.Function;
@@ -8,7 +9,15 @@ public enum States {
 	ADD_TRAVELLERS( AddTravelersStateController::new ),
 	ADD_PACKAGES( AddPackagesStateController::new ),
 	SELECT_PAYMENT_TYPE( SelectPaymentStateController::new ),
-	PAYMENT( PaymentStateController::new ),
+	PAYMENT( trip -> {
+		if ( trip.getPaymentType() == PaymentType.Check ) {
+			return new CheckPaymentStateController( trip );
+		} else if ( trip.getPaymentType() == PaymentType.CreditCard ) {
+			return new CreditCardPaymentStateController( trip );
+		} else {
+			return new CashPaymentStateController( trip );
+		}
+	} ),
 	THANK_YOU( ThankYouStateController::new ),
 	SHOW_ITENERARY( FinalStateController::new );
 

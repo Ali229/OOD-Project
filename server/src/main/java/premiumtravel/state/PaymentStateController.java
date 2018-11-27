@@ -1,16 +1,16 @@
 package premiumtravel.state;
 
+import premiumtravel.cache.PersonRegistry;
 import premiumtravel.trip.Trip;
 
-import java.util.HashMap;
+import javax.ejb.EJB;
 
-/**
- *
- */
-public class PaymentStateController extends StateController {
+public abstract class PaymentStateController extends StateController {
+
+	@EJB PersonRegistry personRegistry;
 
 	/**
-	 *
+	 * @param trip
 	 */
 	PaymentStateController( Trip trip ) {
 		super( trip );
@@ -18,12 +18,10 @@ public class PaymentStateController extends StateController {
 
 	@Override
 	public void nextState() {
-
-	}
-
-	@Override
-	public void accept( HashMap<String, String> stringStringHashMap ) {
-
+		if ( this.trip.getBill().isPaidInFull() ) {
+			this.trip.setState( States.THANK_YOU );
+		} else {
+			throw new RuntimeException( "The bill has not yet been paid in full" );
+		}
 	}
 }
-

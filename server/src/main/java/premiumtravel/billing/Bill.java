@@ -4,78 +4,52 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import premiumtravel.trip.Product;
 
-/**
- * <!-- begin-user-doc --> <!--  end-user-doc  -->
- *
- * @generated
- */
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Bill {
+/**
+ *
+ */
+public class Bill implements Serializable {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
+	private static final long serialVersionUID = 7822660391813459523L;
 
-	public Payment payment;
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
+	public List<Payment> payments = new LinkedList<>();
 	private Product product;
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public Bill( Product product ) {
-		super();
-		// TODO construct me
+		this.product = product;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
-	public double getTotalPrice() {
-		// TODO implement me
-		return 0.0;
+	public BigDecimal getTotalPrice() {
+		return this.product.getPrice();
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public void submitPayment( Payment payment ) {
-		// TODO implement me
+		this.payments.add( payment );
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
 	public boolean isPaidInFull() {
-		// TODO implement me
-		return false;
+		BigDecimal totalPayments = new BigDecimal( 0.0 );
+		for ( Payment payment : this.payments ) {
+			totalPayments = totalPayments.add( payment.amountPaid );
+		}
+		return totalPayments.equals( this.product.getPrice() );
 	}
-
 }
 

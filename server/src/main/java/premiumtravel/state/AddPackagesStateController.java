@@ -24,7 +24,7 @@ public class AddPackagesStateController extends StateController {
 	@Override
 	public void nextState() {
 		if ( this.trip.getReservations().size() > 0 ) {
-			this.trip.setState( States.PAYMENT );
+			this.trip.setState( States.SELECT_PAYMENT_TYPE );
 		} else {
 			throw new RuntimeException( "This trip must have more than 1 package to progress to the next state" );
 		}

@@ -2,33 +2,25 @@ package premiumtravel.billing;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.people.Person;
+
+import java.math.BigDecimal;
 
 /**
- * <!-- begin-user-doc --> <!--  end-user-doc  -->
  *
- * @generated
  */
-
 public class CashPayment extends Payment {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
 	private static final PaymentType type = PaymentType.Check;
+	private static final long serialVersionUID = -7201630434936505385L;
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
 	 */
-	public CashPayment( double amount ) {
-		super( PaymentType.Cash, amount );
+	public CashPayment( BigDecimal amount, Person payer ) {
+		super( PaymentType.Cash, amount, payer );
 	}
 
 	@Override

@@ -2,8 +2,9 @@ package premiumtravel.billing;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.people.Person;
 
-import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  * <!-- begin-user-doc --> <!--  end-user-doc  -->
@@ -15,40 +16,18 @@ public class CreditCardPayment extends Payment {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
 	private static final PaymentType type = PaymentType.Check;
+	private static final long serialVersionUID = -6270018816292065767L;
+	private final String creditCardNumber;
+	private final String expirationDate;
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
-	private String creditCardNumber;
-
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	private Date expirationDate;
-
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 */
-	public CreditCardPayment( double amount ) {
-		super( PaymentType.CreditCard, amount );
+	public CreditCardPayment( BigDecimal amount, Person payer, String creditCardNumber, String expirationDate ) {
+		super( PaymentType.CreditCard, amount, payer );
+		this.creditCardNumber = creditCardNumber;
+		this.expirationDate = expirationDate;
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package premiumtravel.trip;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.billing.Bill;
+import premiumtravel.billing.PaymentType;
 import premiumtravel.cache.RegistryObject;
 import premiumtravel.cache.TravelAgentRegistry;
 import premiumtravel.cache.TravellerRegistry;
@@ -28,14 +30,13 @@ public class Trip implements Product, RegistryObject {
 	@EJB private transient TravelAgentRegistry travelAgentRegistry;
 	@EJB private transient TravellerRegistry travellerRegistry;
 
-	private List<Reservation> reservations;
+	private List<Reservation> reservations = new LinkedList<>();
 	private List<UUID> travellerIDs = new LinkedList<>();
+	private PaymentType paymentType;
 	private UUID travelAgentID;
 	private String thankYouNote;
 	private States state;
-
-	// Reinitialized by getter if null (state must be set)
-	private transient StateController stateController;
+	private Bill bill;
 
 	/**
 	 * Creates a new Trip, organized by the given {@link TravelAgent}.
@@ -45,7 +46,6 @@ public class Trip implements Product, RegistryObject {
 	public Trip( TravelAgent travelAgent ) {
 		super();
 		this.state = States.ADD_TRAVELLERS;
-		getStateController(); // To initialize controller
 		this.travelAgentID = travelAgent.getID();
 
 		// Generate a new ID
@@ -64,8 +64,12 @@ public class Trip implements Product, RegistryObject {
 		this.tripID = generatedID;
 	}
 
-	public UUID getTripID() {
-		return tripID;
+	public PaymentType getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType( PaymentType paymentType ) {
+		this.paymentType = paymentType;
 	}
 
 	public List<Reservation> getReservations() {
@@ -106,23 +110,40 @@ public class Trip implements Product, RegistryObject {
 
 	public void setState( States state ) {
 		this.state = state;
+		if ( this.state == States.PAYMENT ) {
+
+		} else {
+
+		}
+	}
+
+	public Bill getBill() {
+		if ( this.state != States.ADD_TRAVELLERS && this.state != States.ADD_PACKAGES ) {
+			if ( this.bill == null ) {
+				this.bill = new Bill( this );
+			}
+			return this.bill;
+		}
+		throw new RuntimeException( "The bill can not be retrieved in the " + this.state + " state." );
 	}
 
 	/**
 	 *
 	 */
 	public StateController getStateController() {
-		if ( this.stateController == null ) {
-			this.stateController = this.state.getStateController( this );
-		}
-		return this.stateController;
+		return this.state.getStateController( this );
 	}
 
 	/**
 	 *
 	 */
+	@Override
 	public BigDecimal getPrice() {
-		return new BigDecimal( 0.0 );
+		BigDecimal totalPrice = new BigDecimal( 0.0 );
+		for ( Reservation reservation : this.reservations ) {
+			totalPrice = totalPrice.add( reservation.getPrice() );
+		}
+		return totalPrice;
 	}
 
 	@Override

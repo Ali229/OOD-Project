@@ -1,32 +1,17 @@
 package premiumtravel.trip;
 
-import premiumtravel.billing.Bill;
-
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * <!-- begin-user-doc --> <!--  end-user-doc  -->
  *
- * @generated
  */
-public interface Product {
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	public Bill bill = null;
+public interface Product extends Serializable {
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
-	public BigDecimal getPrice();
+	BigDecimal getPrice();
 
 }
 

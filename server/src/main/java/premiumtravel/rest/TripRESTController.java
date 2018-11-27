@@ -96,4 +96,30 @@ public class TripRESTController extends AbstractRESTController {
 		}
 		return addHeaders( Response.status( 404, "No trip with the ID of \"" + tripID + "\" exists." ) ).build();
 	}
+
+	@GET
+	@Path( "{trip-id}/bill" )
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response getTripBill( @DefaultValue( "-1" ) @PathParam( "trip-id" ) String tripID ) {
+		logger.debug( "GET called on /trip/" + tripID + "/bill" );
+		Trip trip = this.tripRegistry.get( tripID );
+		try {
+			return addHeaders( Response.ok( gson.toJson( trip.getBill() ) ) ).build();
+		} catch ( RuntimeException e ) {
+			return addHeaders( Response.status( 400, e.getMessage() ) ).build();
+		}
+	}
+
+	@GET
+	@Path( "{trip-id}/itinerary" )
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response getTripItinerary( @DefaultValue( "-1" ) @PathParam( "trip-id" ) String tripID ) {
+		logger.debug( "GET called on /trip/" + tripID + "/itinerary");
+		Trip trip = this.tripRegistry.get( tripID );
+		try {
+			return addHeaders( Response.ok( gson.toJson( trip.getBill() ) ) ).build(); // TODO Change bill to itinerary
+		} catch ( RuntimeException e ) {
+			return addHeaders( Response.status( 400, e.getMessage() ) ).build();
+		}
+	}
 }
