@@ -17,17 +17,18 @@ import javax.inject.Named;
 @Startup
 @Singleton
 @ApplicationScoped
-@DependsOn( {"PlaceRegistry", "PackageFactory"} )
+@DependsOn( { "PlaceRegistry", "PackageFactory" } )
 @ConcurrencyManagement( ConcurrencyManagementType.CONTAINER )
 public class PackageRegistry extends Registry<TravelPackage> {
 
 	private static final long serialVersionUID = 5858594429818177713L;
 
 	@EJB private transient PackageFactory packageFactory;
+	@EJB private transient PlaceRegistry placeRegistry;
 
 	@PostConstruct
 	void init() {
-		resetRegistry( packageFactory.generatePackages() );
+		resetRegistry( packageFactory.generatePackages( placeRegistry.getAll() ) );
 	}
 }
 

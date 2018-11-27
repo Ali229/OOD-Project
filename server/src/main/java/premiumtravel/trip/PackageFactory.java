@@ -2,9 +2,11 @@ package premiumtravel.trip;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import premiumtravel.cache.PlaceRegistry;
 
-import javax.ejb.*;
+import javax.ejb.ConcurrencyManagement;
+import javax.ejb.ConcurrencyManagementType;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Model;
 import javax.inject.Named;
@@ -22,13 +24,10 @@ import java.util.Random;
 @Startup
 @Singleton
 @ApplicationScoped
-@DependsOn( "PlaceRegistry" )
 @ConcurrencyManagement( ConcurrencyManagementType.CONTAINER )
 public class PackageFactory {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
-
-	@EJB PlaceRegistry placeRegistry;
 
 	public TravelPackage getPackage( Place placeFrom, Place placeTo, TransportType transportType ) {
 		Random random = new Random();
@@ -37,10 +36,10 @@ public class PackageFactory {
 		return new TravelPackage( placeFrom, placeTo, transportType, random.nextInt(), price );
 	}
 
-	public List<TravelPackage> generatePackages() {
+	public List<TravelPackage> generatePackages( List<Place> places ) {
 		List<TravelPackage> packages = new LinkedList<>();
-		for ( Place placeFrom : this.placeRegistry.getAll() ) {
-			for ( Place placeTo : this.placeRegistry.getAll() ) {
+		for ( Place placeFrom : places ) {
+			for ( Place placeTo : places ) {
 				if ( !placeFrom.equals( placeTo ) ) {
 					for ( TransportType transportType : TransportType.values() ) {
 
