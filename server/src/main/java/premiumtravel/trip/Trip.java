@@ -72,8 +72,8 @@ public class Trip implements Product, RegistryObject {
 		return reservations;
 	}
 
-	public void setReservations( List<Reservation> reservations ) {
-		this.reservations = reservations;
+	public void addReservation( Reservation reservation ) {
+		this.reservations.add( reservation );
 	}
 
 	public List<Traveller> getTravellers() {
