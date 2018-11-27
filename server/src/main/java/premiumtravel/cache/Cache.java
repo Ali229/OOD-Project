@@ -24,7 +24,7 @@ import java.util.Date;
 @Singleton
 @ApplicationScoped
 @ConcurrencyManagement( ConcurrencyManagementType.CONTAINER )
-@DependsOn( { "PackageRegistry", "PersonRegistry", "PlaceRegistry", "TravelAgentRegistry", "TravellerRegistry",
+@DependsOn( { "PackageRegistry", "PersonRegistry", "TravelAgentRegistry", "TravellerRegistry",
 					"TripRegistry" } )
 public class Cache {
 
