@@ -31,7 +31,7 @@ public class TravellerRESTController extends AbstractRESTController {
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response getTravelAgents() {
-		return Response.ok( gson.toJson( travellerRegistry.getAll() ) ).build();
+		return addHeaders( Response.ok( gson.toJson( travellerRegistry.getAll() ) ) ).build();
 	}
 
 	@GET
@@ -41,10 +41,10 @@ public class TravellerRESTController extends AbstractRESTController {
 		logger.trace( "GET called on /traveller/" + travellerID );
 		for ( Traveller traveller : travellerRegistry.getAll() ) {
 			if ( traveller.getPersonID().equals( travellerID ) ) {
-				return Response.ok( gson.toJson( traveller ) ).build();
+				return addHeaders( Response.ok( gson.toJson( traveller ) ) ).build();
 			}
 		}
-		return Response.status( 400, "No Traveller with that ID exists." ).build();
+		return addHeaders( Response.status( 400, "No Traveller with that ID exists." ) ).build();
 	}
 
 	@POST
@@ -55,7 +55,8 @@ public class TravellerRESTController extends AbstractRESTController {
 		Person traveller = this.personFactory
 				.getPerson( PersonFactory.PersonType.Traveller, data.get( "firstName" ), data.get( "lastName" ),
 						data.get( "phoneNumber" ) );//data.firstName, data.lastName, data.phoneNumber );
-		return Response.accepted( Json.createObjectBuilder().add( "person_id", traveller.getPersonID() ).build() )
+		return addHeaders(
+				Response.accepted( Json.createObjectBuilder().add( "person_id", traveller.getPersonID() ).build() ) )
 				.build();
 	}
 }

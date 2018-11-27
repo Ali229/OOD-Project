@@ -33,7 +33,7 @@ public class PersonRESTController extends AbstractRESTController {
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response getPeople() {
-		return Response.ok( gson.toJson( personRegistry.getAll() ) ).build();
+		return addHeaders( Response.ok( gson.toJson( personRegistry.getAll() ) ) ).build();
 	}
 
 	@GET
@@ -43,10 +43,10 @@ public class PersonRESTController extends AbstractRESTController {
 		logger.trace( "GET called on /person/" + personID );
 		for ( Person person : personRegistry.getAll() ) {
 			if ( person.getPersonID().equals( personID ) ) {
-				return Response.ok( gson.toJson( person ) ).build();
+				return addHeaders( Response.ok( gson.toJson( person ) ) ).build();
 			}
 		}
-		return Response.status( 400, "No Person with that ID exists." ).build();
+		return addHeaders( Response.status( 400, "No Person with that ID exists." ) ).build();
 	}
 
 	@POST
@@ -54,9 +54,11 @@ public class PersonRESTController extends AbstractRESTController {
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response postTravelAgent( HashMap<String, String> data ) {
 		logger.trace( "POST called on /person with data: " + data.toString() );
-		Person guest = this.personFactory.getPerson( PersonFactory.PersonType.SystemGuest, data.get( "firstName" ), data.get( "lastName" ),
-				data.get( "phoneNumber" ) );//data.firstName, data.lastName, data.phoneNumber );
-		return Response.accepted( Json.createObjectBuilder().add( "person_id", guest.getPersonID() ).build() )
+		Person guest = this.personFactory
+				.getPerson( PersonFactory.PersonType.SystemGuest, data.get( "firstName" ), data.get( "lastName" ),
+						data.get( "phoneNumber" ) );//data.firstName, data.lastName, data.phoneNumber );
+		return addHeaders(
+				Response.accepted( Json.createObjectBuilder().add( "person_id", guest.getPersonID() ).build() ) )
 				.build();
 	}
 }

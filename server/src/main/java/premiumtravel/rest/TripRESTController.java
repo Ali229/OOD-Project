@@ -34,17 +34,18 @@ public class TripRESTController extends AbstractRESTController {
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response createTrip( HashMap<String, String> data ) {
 		if ( !data.containsKey( "travel-agent-id" ) ) {
-			return Response.status( 400, "The request data must include the posting travel-agent-id" ).build();
+			return addHeaders( Response.status( 400, "The request data must include the posting travel-agent-id" ) )
+					.build();
 		}
 		String travelAgentID = data.get( "travel-agent-id" );
 		TravelAgent travelAgent = this.travelAgentRegistry.get( travelAgentID );
 		if ( travelAgent == null ) {
-			return Response.status( 400, "The given travel-agent-id is invalid." ).build();
+			return addHeaders( Response.status( 400, "The given travel-agent-id is invalid." ) ).build();
 		}
 		Trip newTrip = new Trip( travelAgent );
 		this.tripRegistry.add( newTrip );
-		return Response.status( 201,
-				Json.createObjectBuilder().add( "trip-id", newTrip.getID().toString() ).build().toString() ).build();
+		return addHeaders( Response.status( 201,
+				Json.createObjectBuilder().add( "trip-id", newTrip.getID().toString() ).build().toString() ) ).build();
 	}
 
 	@GET
@@ -53,7 +54,7 @@ public class TripRESTController extends AbstractRESTController {
 	public Response getTrip( @DefaultValue( "-1" ) @PathParam( "trip-id" ) String tripID ) {
 		logger.debug( "GET called on /trip/" + tripID );
 		Trip trip = this.tripRegistry.get( tripID );
-		return Response.ok( gson.toJson( trip ) ).build();
+		return addHeaders( Response.ok( gson.toJson( trip ) ) ).build();
 	}
 
 	@PUT
@@ -67,9 +68,9 @@ public class TripRESTController extends AbstractRESTController {
 			if ( trip.getID().toString().equals( tripID ) ) {
 				try {
 					trip.getStateController().accept( data );
-					return Response.accepted().build();
+					return addHeaders( Response.accepted() ).build();
 				} catch ( RuntimeException e ) {
-					return Response.status( 400, e.getMessage() ).build();
+					return addHeaders( Response.status( 400, e.getMessage() ) ).build();
 				}
 			}
 		}
@@ -87,12 +88,12 @@ public class TripRESTController extends AbstractRESTController {
 			if ( trip.getID().toString().equals( tripID ) ) {
 				try {
 					trip.getStateController().nextState();
-					return Response.accepted().build();
+					return addHeaders( Response.accepted() ).build();
 				} catch ( RuntimeException e ) {
-					return Response.status( 400, e.getMessage() ).build();
+					return addHeaders( Response.status( 400, e.getMessage() ) ).build();
 				}
 			}
 		}
-		return Response.status( 404, "No trip with the ID of \"" + tripID + "\" exists." ).build();
+		return addHeaders( Response.status( 404, "No trip with the ID of \"" + tripID + "\" exists." ) ).build();
 	}
 }

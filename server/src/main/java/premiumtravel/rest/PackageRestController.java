@@ -23,7 +23,7 @@ public class PackageRestController extends AbstractRESTController {
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response getTravelAgents() {
-		return Response.ok( gson.toJson( packageRegistry.getAll() ) ).build();
+		return addHeaders( Response.ok( gson.toJson( packageRegistry.getAll() ) ) ).build();
 	}
 
 	@GET
@@ -33,9 +33,9 @@ public class PackageRestController extends AbstractRESTController {
 		logger.trace( "GET called on /package/" + packageID );
 		for ( TravelPackage travelPackage : packageRegistry.getAll() ) {
 			if ( travelPackage.getID().toString().equals( packageID ) ) {
-				return Response.ok( gson.toJson( travelPackage ) ).build();
+				return addHeaders( Response.ok( gson.toJson( travelPackage ) ) ).build();
 			}
 		}
-		return Response.status( 400, "No Package with that ID exists." ).build();
+		return addHeaders( Response.status( 400, "No Package with that ID exists." ) ).build();
 	}
 }
