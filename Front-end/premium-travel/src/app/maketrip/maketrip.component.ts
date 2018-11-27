@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'angular-bootstrap-md';
+import {ResourcesService} from '../services/resources.service';
 
 @Component({
   selector: 'app-maketrip',
@@ -15,8 +16,12 @@ export class MaketripComponent implements OnInit {
   packages: boolean;
   paymentPerson: boolean;
   paymentType: boolean;
+  travelersList: Traveler[];
+  addedTravelersList: Traveler[] = [];
+  selectedTraveler: string;
+  numOfTravelers = 0;
 
-  constructor() {
+  constructor(private resService: ResourcesService) {
   }
 
   ngOnInit() {
@@ -24,6 +29,10 @@ export class MaketripComponent implements OnInit {
   }
 
   showTravelersModal() {
+    this.resService.getAllTravelersObservable().subscribe((response: Traveler[]) => {
+      // this.resService.getAllAgentsObservable().subscribe((response: Traveler[]) => {
+      this.travelersList = response;
+    });
     this.travelersModal.show();
   }
 
@@ -76,5 +85,10 @@ export class MaketripComponent implements OnInit {
     this.packages = false;
     this.paymentPerson = false;
     this.paymentType = false;
+  }
+
+  addTravelerFromList(t: Traveler) {
+    this.addedTravelersList.push(t);
+    this.numOfTravelers++;
   }
 }

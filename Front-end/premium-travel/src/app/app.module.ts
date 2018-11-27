@@ -6,6 +6,7 @@ import {NavbarComponent} from './navbar/navbar.component';
 import {AppRoutingModule, routingComponents} from './app-routing.module';
 import {ResourcesService} from './services/resources.service';
 import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {HttpClientModule} from '@angular/common/http';
     MDBBootstrapModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     ResourcesService,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-mainpage',
@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mainpage.component.scss']
 })
 export class MainpageComponent implements OnInit {
+  fname: string;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+    this.fname = localStorage.getItem('agent');
   }
 
 }

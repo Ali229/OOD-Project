@@ -6,15 +6,16 @@
       Select Agent
     </p>
 
-    <select class="browser-default custom-select">
-      <option selected value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
+
+    <select [(ngModel)]="selectedOption" class="browser-default custom-select">
+      <option *ngFor="let agent of agentList" selected [value]="agent.firstName">{{agent.firstName + " " +
+        agent.lastName}}
+      </option>
     </select>
 
     <p style="margin-top: 30px">
       <a routerLink="/home">
-        <button class="bt" mdbBtn type="button" color="unique" mdbWavesEffect>Login
+        <button class="bt" (click)="login()" mdbBtn type="button" color="unique" mdbWavesEffect>Login
         </button>
       </a>
     </p>
