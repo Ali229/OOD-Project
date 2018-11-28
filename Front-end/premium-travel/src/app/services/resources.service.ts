@@ -44,6 +44,10 @@ export class ResourcesService {
     return this.http.get(this.backendAddress + 'place', this.getGETJSONHeaders());
   }
 
+  public getAllPaymentPersonsObservable() {
+    return this.http.get(this.backendAddress + 'person', this.getGETJSONHeaders());
+  }
+
   public getAgent(id: string) {
     return this.http.get(this.backendAddress + 'travel-agent/' + id, this.getPOSTPUTJSONHeaders());
   }

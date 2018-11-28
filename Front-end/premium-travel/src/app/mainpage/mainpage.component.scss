@@ -4,14 +4,16 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .vertical-center {
-  margin-left: -18em;
+  margin-left: -25em;
   position: absolute;
   top: 50%;
-  left:50%;
+  left: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+
 h1, h3 {
   text-shadow: 2px 2px black;
 }

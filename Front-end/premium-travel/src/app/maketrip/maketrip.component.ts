@@ -17,10 +17,12 @@ export class MaketripComponent implements OnInit {
   paymentPerson: boolean;
   paymentType: boolean;
   travelersList: Traveler[];
+  packageList: Package[];
+  paymentPersonList: PaymentPerson[];
   addedTravelersList: Traveler[] = [];
   selectedTraveler: string;
   numOfTravelers = 0;
-  packageList: Package[];
+
 
   constructor(private resService: ResourcesService) {
   }
@@ -31,7 +33,6 @@ export class MaketripComponent implements OnInit {
 
   showTravelersModal() {
     this.resService.getAllTravelersObservable().subscribe((response: Traveler[]) => {
-      // this.resService.getAllAgentsObservable().subscribe((response: Traveler[]) => {
       this.travelersList = response;
     });
     this.travelersModal.show();
@@ -39,13 +40,15 @@ export class MaketripComponent implements OnInit {
 
   showPackageModal() {
     this.resService.getAllPlacesObservable().subscribe((response: Package[]) => {
-      // this.resService.getAllAgentsObservable().subscribe((response: Traveler[]) => {
       this.packageList = response;
     });
     this.packageModal.show();
   }
 
   showPaymentPersonModal() {
+    this.resService.getAllPlacesObservable().subscribe((response: PaymentPerson[]) => {
+      this.paymentPersonList = response;
+    });
     this.paymentPersonModal.show();
   }
 
