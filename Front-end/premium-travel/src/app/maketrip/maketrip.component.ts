@@ -16,19 +16,24 @@ export class MaketripComponent implements OnInit {
   packages: boolean;
   paymentPerson: boolean;
   paymentType: boolean;
+  showItinerary = false;
   travelersList: Traveler[];
   packageList: Package[];
   paymentPersonList: PaymentPerson[];
   addedTravelersList: Traveler[] = [];
+  addedPackagesList: Package[] = [];
   selectedTraveler: string;
+  selectedFROM: string;
+  selectedTO: string;
+  agent: string;
   numOfTravelers = 0;
-
 
   constructor(private resService: ResourcesService) {
   }
 
   ngOnInit() {
     this.stateTraveler();
+    this.agent = localStorage.getItem('agent');
   }
 
   showTravelersModal() {
@@ -93,6 +98,7 @@ export class MaketripComponent implements OnInit {
     this.packages = false;
     this.paymentPerson = false;
     this.paymentType = false;
+    this.showItinerary = true;
   }
 
   addTravelerFromList(t: Traveler) {

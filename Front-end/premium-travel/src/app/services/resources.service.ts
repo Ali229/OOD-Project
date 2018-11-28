@@ -48,6 +48,10 @@ export class ResourcesService {
     return this.http.get(this.backendAddress + 'person', this.getGETJSONHeaders());
   }
 
+  public getItineraryObservable() {
+    return this.http.get(this.backendAddress + 'trip/{trip-id}/itinerary', this.getGETJSONHeaders());
+  }
+
   public getAgent(id: string) {
     return this.http.get(this.backendAddress + 'travel-agent/' + id, this.getPOSTPUTJSONHeaders());
   }
@@ -58,5 +62,9 @@ export class ResourcesService {
       'lastName': lastName,
       'phoneNumber': phoneNumber
     }, this.getPOSTPUTJSONHeaders());
+  }
+
+  public createTrip() {
+    return this.http.get(this.backendAddress + 'trip', this.getPOSTPUTJSONHeaders());
   }
 }

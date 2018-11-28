@@ -32,6 +32,23 @@
         </button>
       </p>
     </div>
+    <!-------------------------------------------------- Showing Itinerary -------------------------------------------->
+    <div *ngIf="showItinerary" style="color: white;">
+      <h4>Agent:</h4>
+      <h6>{{agent}}</h6>
+      <h4>Travellers:</h4>
+      <h6 *ngFor="let t of addedTravelersList">t</h6>
+      <h4>Packages:</h4>
+      <h6 *ngFor="let p of addedPackagesList">p</h6>
+      <h4>PaymentPerson:</h4>
+      <!--<h6>{{agent}}</h8>-->
+      <h4>PaymentMethod:</h4>
+      <!--<h6>{{agent}}</h8>-->
+      <h4>Payment Amount:</h4>
+      <!--<h6>{{agent}}</h8>-->
+      <h4>Thank you for using Rick & Morty Travel!</h4>
+    </div>
+    <!-------------------------------------------------- End Showing Itinerary ---------------------------------------->
   </div>
 </div>
 
@@ -192,7 +209,7 @@
 </div>
 <!-------------------------------------------------- End Modal to add payment person ---------------------------------->
 
-<!-------------------------------------------------- Modal to add payment type -------------------------------------->
+<!-------------------------------------------------- Modal to add payment type ---------------------------------------->
 <div mdbModal #paymentTypeModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
      aria-labelledby="mypackageModalLabel"
      aria-hidden="true">
@@ -232,4 +249,4 @@
     </div>
   </div>
 </div>
-<!-------------------------------------------------- End Modal to add payment type ---------------------------------->
+<!-------------------------------------------------- End Modal to add payment type ------------------------------------>
