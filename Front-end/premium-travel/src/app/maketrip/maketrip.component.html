@@ -51,7 +51,7 @@
         <form name="f1">
           <div class="form-row">
             <div class="col">
-              <select [(ngModel)]="selectedTraveler" class="browser-default custom-select" name="ds">
+              <select [(ngModel)]="selectedTraveler" class="browser-default custom-select" name="ds1">
                 <option *ngFor="let traveler of travelersList" selected [value]="traveler.firstName">
                   {{traveler.firstName + " " +
                   traveler.lastName}}
@@ -64,15 +64,15 @@
               </button>
             </div>
           </div>
-          <div class="form-row">
-            <div class="col">
-              <input mdbInputDirective type="text" class="form-control" placeholder="First name">
-            </div>
-            <div class="col">
-              <button mdbBtn type="button" color="unique" mdbWavesEffect>Add
-              </button>
-            </div>
-          </div>
+          <!--<div class="form-row">-->
+          <!--<div class="col">-->
+          <!--<input mdbInputDirective type="text" class="form-control" placeholder="First name">-->
+          <!--</div>-->
+          <!--<div class="col">-->
+          <!--<button mdbBtn type="button" color="unique" mdbWavesEffect>Add-->
+          <!--</button>-->
+          <!--</div>-->
+          <!--</div>-->
         </form>
 
       </div>
@@ -106,16 +106,16 @@
         <h4 class="modal-title w-100" id="myModalLabel1">Add Package</h4>
       </div>
       <div class="modal-body">
-        <form>
+        <form name="f2">
           <div class="form-row">
             <div class="col">
               FROM:
             </div>
             <div class="col">
-              <select class="browser-default custom-select">
-                <option selected value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+              <select [(ngModel)]="selectedTO" class="browser-default custom-select" name="ds2">
+                <option *ngFor="let package of packageList" selected [value]="package.name">
+                  {{package.name}}
+                </option>
               </select>
             </div>
           </div>
@@ -124,10 +124,10 @@
               TO:
             </div>
             <div class="col">
-              <select class="browser-default custom-select">
-                <option selected value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+              <select [(ngModel)]="selectedTO" class="browser-default custom-select" name="ds21">
+                <option *ngFor="let package of packageList" selected [value]="package.name">
+                  {{package.name}}
+                </option>
               </select>
             </div>
           </div>

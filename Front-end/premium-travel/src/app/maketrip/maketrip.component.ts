@@ -20,6 +20,7 @@ export class MaketripComponent implements OnInit {
   addedTravelersList: Traveler[] = [];
   selectedTraveler: string;
   numOfTravelers = 0;
+  packageList: Package[];
 
   constructor(private resService: ResourcesService) {
   }
@@ -37,6 +38,10 @@ export class MaketripComponent implements OnInit {
   }
 
   showPackageModal() {
+    this.resService.getAllPlacesObservable().subscribe((response: Package[]) => {
+      // this.resService.getAllAgentsObservable().subscribe((response: Traveler[]) => {
+      this.packageList = response;
+    });
     this.packageModal.show();
   }
 
