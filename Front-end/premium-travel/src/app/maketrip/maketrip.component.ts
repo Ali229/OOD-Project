@@ -25,6 +25,8 @@ export class MaketripComponent implements OnInit {
   selectedTraveler: string;
   selectedFROM: string;
   selectedTO: string;
+  selectedPaymentType: string;
+  selectedPaymentPerson: string;
   agent: string;
   numOfTravelers = 0;
 
@@ -34,6 +36,7 @@ export class MaketripComponent implements OnInit {
   ngOnInit() {
     this.stateTraveler();
     this.agent = localStorage.getItem('agent');
+    console.log(this.selectedPaymentType);
   }
 
   showTravelersModal() {

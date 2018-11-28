@@ -1,3 +1,28 @@
+<!--
+
+  \----------------------------------\
+   \                                  \
+    \                                  \
+     |                                 |
+     |       ____  ___   __  __        |
+     |      |  _ \( _ ) |  \/  |       |
+     |      | |_) / _ \/\ |\/| |       |
+     |      |  _ < (_>  < |  | |       |
+     |      |_| \_\___/\/_|  |_|       |
+     |                                 |          __
+     |                                  >---------|  \       ______
+    /                                  /         --- \_____/**|_|_\____|
+   /                                  /          \_______ --------- __>-}
+  /----------------------------------/              /  \_____|_____/   |
+                                                    *         |
+                                                             {O}
+
+       /*\       /*\       /*\       /*\       /*\       /*\       /*\
+      |***|     |***|     |***|     |***|     |***|     |***|     |***|
+       \*/       \*/ ____  \*/       \*/       \*/       \*/       \*/
+        |         |  |  |   |         |         |         |         |
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-->
 <div class="back">
   <app-navbar></app-navbar>
   <div class="vertical-center" style="text-align:center">
@@ -41,9 +66,9 @@
       <h4>Packages:</h4>
       <h6 *ngFor="let p of addedPackagesList">p</h6>
       <h4>PaymentPerson:</h4>
-      <!--<h6>{{agent}}</h8>-->
+      <h6>{{selectedPaymentPerson}}</h6>
       <h4>PaymentMethod:</h4>
-      <!--<h6>{{agent}}</h8>-->
+      <h6>{{selectedPaymentType}}</h6>
       <h4>Payment Amount:</h4>
       <!--<h6>{{agent}}</h8>-->
       <h4>Thank you for using Rick & Morty Travel!</h4>
@@ -71,7 +96,7 @@
               <select [(ngModel)]="selectedTraveler" class="browser-default custom-select" name="ds1">
                 <option *ngFor="let traveler of travelersList" selected [value]="traveler.firstName">
                   {{traveler.firstName + " " +
-                  traveler.lastName}}
+                traveler.lastName}}
                 </option>
               </select>
             </div>
@@ -180,12 +205,12 @@
         <h4 class="modal-title w-100" id="myModalLabel2">Select Payment Person</h4>
       </div>
       <div class="modal-body">
-        <form>
+        <form name="f3">
           <div class="form-row">
             <div class="col">
-              <select [(ngModel)]="selectedTO" class="browser-default custom-select" name="ds21">
-                <option *ngFor="let package of packageList" selected [value]="package.name">
-                  {{package.name}}
+              <select [(ngModel)]="selectedPaymentPerson" class="browser-default custom-select" name="ds21">
+                <option *ngFor="let pp of paymentPersonList" selected [value]="pp.firstName + pp.lastName">
+                  {{pp.firstName + pp.lastName}}
                 </option>
               </select>
             </div>
@@ -222,18 +247,34 @@
         <h4 class="modal-title w-100" id="myModalLabel3">Select Payment Type</h4>
       </div>
       <div class="modal-body">
-        <form>
+        <form name="f4">
           <div class="form-row">
             <div class="col">
-              <select class="browser-default custom-select">
-                <option selected value="1">Credit Card</option>
-                <option value="2">Check</option>
-                <option value="3">Cash</option>
+              <select [(ngModel)]="selectedPaymentType" class="browser-default custom-select" name="ds3">
+                <option selected value="credit">Credit Card</option>
+                <option value="check">Check</option>
+                <option value="cash">Cash</option>
               </select>
             </div>
-          </div>
-
-          <div class="form-row">
+            <div class="col">
+              <div *ngIf="selectedPaymentType == 'credit'" class="md-form">
+                <div class="col"><input mdbInputDirective type="text" id="ccn" class="form-control">
+                  <label for="ccn" class="">Credit Card Number</label>
+                </div>
+                <div class="col"><input mdbInputDirective type="text" id="cce" class="form-control">
+                  <label for="cce" class="">Credit Card Expiry</label></div>
+              </div>
+              <div *ngIf="selectedPaymentType == 'check'" class="md-form">
+                <input mdbInputDirective type="text" id="check" class="form-control">
+                <label for="check" class="">Check Number</label>
+              </div>
+              <div *ngIf="selectedPaymentType == 'cash'" class="md-form">
+                <input mdbInputDirective type="text" id="cash" class="form-control">
+                <label for="cash" class="">Cash Amount</label>
+              </div>
+              <div class="form-row">
+              </div>
+            </div>
           </div>
         </form>
       </div>
