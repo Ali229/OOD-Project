@@ -96,5 +96,6 @@ public abstract class Registry<T extends RegistryObject> extends Observable impl
 		synchronized ( this.registryList ) {
 			this.registryList.add( t );
 		}
+		notifyObservers();
 	}
 }

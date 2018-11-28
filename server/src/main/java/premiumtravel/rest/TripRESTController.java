@@ -44,7 +44,7 @@ public class TripRESTController extends AbstractRESTController {
 		}
 		Trip newTrip = new Trip( travelAgent );
 		this.tripRegistry.add( newTrip );
-		return addHeaders( Response.status( 201,
+		return addHeaders( Response.ok(
 				Json.createObjectBuilder().add( "trip-id", newTrip.getID().toString() ).build().toString() ) ).build();
 	}
 

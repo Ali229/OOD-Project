@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
@@ -24,9 +26,8 @@ import java.util.Date;
 @Singleton
 @ApplicationScoped
 @ConcurrencyManagement( ConcurrencyManagementType.CONTAINER )
-@DependsOn( { "PackageRegistry", "PersonRegistry", "TravelAgentRegistry", "TravellerRegistry",
-					"TripRegistry" } )
-public class Cache {
+@DependsOn( { "PackageRegistry", "PersonRegistry", "TravelAgentRegistry", "TravellerRegistry", "TripRegistry" } )
+public class Cache implements Observer {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 	private static Wini ini;
@@ -68,12 +69,18 @@ public class Cache {
 
 		if ( file.exists() ) {
 			try {
-				serializer.loadData();
+				reloadAll();
 			} catch ( Exception e ) {
 				logger.error( "There was an error loading data from the file set in config.ini" );
 				logger.error( e.getMessage() );
 			}
 		}
+
+		// Subscribe to registries
+		this.travelAgentRegistry.addObserver( this );
+		this.travellerRegistry.addObserver( this );
+		this.personRegistry.addObserver( this );
+		this.tripRegistry.addObserver( this );
 	}
 
 	/**
@@ -126,7 +133,8 @@ public class Cache {
 			DataSerializer serializer = this.protocol.getSerializer( this.file );
 			this.serializer = serializer; // Separated so an exception won't mess up anything
 		} catch ( Exception e ) {
-			logger.error( "The new " + this.protocol.name() + " cache could not be created." );
+			logger.error( "The new " + this.protocol.name() + " cache serializer could not be created." );
+			logger.error( e.getClass() + ": " + e.getMessage() );
 		}
 	}
 
@@ -141,6 +149,16 @@ public class Cache {
 		this.travelAgentRegistry.resetRegistry( saveData.travelAgents );
 		this.travellerRegistry.resetRegistry( saveData.travellers );
 		this.tripRegistry.resetRegistry( saveData.trips );
+	}
+
+	@Override
+	public void update( Observable o, Object arg ) {
+		try {
+			saveAll();
+		} catch ( IOException e ) {
+			logger.error( "There was an error trying to save the cache." );
+			logger.error( e.getMessage() );
+		}
 	}
 }
 
