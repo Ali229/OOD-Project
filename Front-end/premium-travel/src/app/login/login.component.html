@@ -2,18 +2,16 @@
   <div class="lg-form">
     <h3>R&M Travel Login</h3>
     <img src="../../assets/login.png" class="img" alt="1">
-    <p style="margin-top: 50px">
+    <p>
       Select Agent
     </p>
-
-
     <select [(ngModel)]="selectedOption" class="browser-default custom-select">
       <option *ngFor="let agent of agentList" selected [value]="agent.firstName">{{agent.firstName + " " +
-        agent.lastName}}
+      agent.lastName}}
       </option>
     </select>
 
-    <p style="margin-top: 30px">
+    <p style="margin-top: 15px">
       <a routerLink="/home">
         <button class="bt" (click)="login()" mdbBtn type="button" color="unique" mdbWavesEffect>Login
         </button>
