@@ -58,8 +58,12 @@ public class Reservation implements Product, Serializable {
 
 	@Override
 	public String getBillText() {
-		return this.chosenPackage.getBillText() + " [departing: " + this.departingOn + "], [arriving: "
-				+ this.arrivingOn + "]\n\t$" + getPrice() + "\n";
+		return toString() + "\n\t$" + getPrice() + "\n";
+	}
+
+	@Override
+	public String toString() {
+		return this.chosenPackage.toString() + " [departing: " + this.departingOn + "], [arriving: " + this.arrivingOn + "]";
 	}
 }
 

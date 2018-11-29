@@ -58,12 +58,16 @@ public class TravelPackage implements Product, RegistryObject {
 		this.packageID = generatedID;
 	}
 
-	/**
-	 *
-	 */
-	public String toString() {
-		// TODO implement me
-		return "";
+	public Place getFromPlace() {
+		return fromPlace;
+	}
+
+	public Place getToPlace() {
+		return toPlace;
+	}
+
+	public TransportType getTransportType() {
+		return transportType;
 	}
 
 	/**
@@ -75,7 +79,12 @@ public class TravelPackage implements Product, RegistryObject {
 
 	@Override
 	public String getBillText() {
-		return this.transportType.name() + " from " + this.fromPlace.name +  " to " + this.toPlace.name;
+		return toString();
+	}
+
+	@Override
+	public String toString() {
+		return this.transportType.name() + " from " + this.fromPlace.name + " to " + this.toPlace.name;
 	}
 
 	@Override

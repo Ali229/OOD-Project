@@ -40,7 +40,7 @@ public class AddPackagesStateController extends StateController {
 		if ( !data.containsKey( "arrival-date" ) ) {
 			throw new RuntimeException( "The data must contain the key \"arrival-date\" and its associated value" );
 		}
-		String arrivalDate = data.get( "arrivalDate" );
+		String arrivalDate = data.get( "arrival-date" );
 		this.trip.addReservation( new Reservation( premiumTravelCache.getPackageRegistry().get( packageID ), departureDate, arrivalDate ) );
 	}
 }

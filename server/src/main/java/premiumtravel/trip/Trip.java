@@ -7,6 +7,10 @@ import premiumtravel.billing.PaymentType;
 import premiumtravel.billing.Product;
 import premiumtravel.cache.PremiumTravelCache;
 import premiumtravel.cache.RegistryObject;
+import premiumtravel.itinerary.AbstractItineraryComponent;
+import premiumtravel.itinerary.DecorativeItineraryComponent;
+import premiumtravel.itinerary.ItineraryComponent;
+import premiumtravel.itinerary.ReservationItineraryComponent;
 import premiumtravel.people.TravelAgent;
 import premiumtravel.people.Traveller;
 import premiumtravel.state.StateController;
@@ -34,6 +38,7 @@ public class Trip implements Product, RegistryObject {
 	private String thankYouNote;
 	private States state;
 	private Bill bill;
+	private ItineraryComponent itinerary = AbstractItineraryComponent.getBaseComponent();
 
 	/**
 	 * Creates a new Trip, organized by the given {@link TravelAgent}.
@@ -62,6 +67,10 @@ public class Trip implements Product, RegistryObject {
 		this.tripID = generatedID;
 	}
 
+	public ItineraryComponent getItinerary() {
+		return itinerary;
+	}
+
 	public PaymentType getPaymentType() {
 		return paymentType;
 	}
@@ -76,6 +85,7 @@ public class Trip implements Product, RegistryObject {
 
 	public void addReservation( Reservation reservation ) {
 		this.reservations.add( reservation );
+		this.itinerary = new ReservationItineraryComponent( this.itinerary, reservation );
 	}
 
 	public List<Traveller> getTravellers() {
@@ -100,6 +110,8 @@ public class Trip implements Product, RegistryObject {
 
 	public void setThankYouNote( String thankYouNote ) {
 		this.thankYouNote = thankYouNote;
+		this.itinerary = new DecorativeItineraryComponent(
+				new DecorativeItineraryComponent( this.itinerary, "\n-------------------------\n\n" ), thankYouNote );
 	}
 
 	public States getState() {

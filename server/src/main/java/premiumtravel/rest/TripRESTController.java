@@ -135,7 +135,7 @@ public class TripRESTController extends AbstractRESTController {
 		logger.debug( "GET called on /trip/" + tripID + "/itinerary" );
 		Trip trip = this.premiumTravelCache.getTripRegistry().get( tripID );
 		try {
-			return addHeaders( Response.ok( gson.toJson( trip.getBill() ) ) ).build(); // TODO Change bill to itinerary
+			return addHeaders( Response.ok( gson.toJson( trip.getItinerary().getItinerary() ) ) ).build();
 		} catch ( RuntimeException e ) {
 			return addHeaders( Response.status( 400, e.getMessage() ) ).build();
 		}

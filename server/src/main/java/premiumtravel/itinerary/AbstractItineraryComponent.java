@@ -4,59 +4,25 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * <!-- begin-user-doc --> <!--  end-user-doc  -->
  *
- * @generated
  */
-
-public class AbstractItineraryComponent implements IteneraryComponent {
+public abstract class AbstractItineraryComponent implements ItineraryComponent {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
+	ItineraryComponent precedingComponent;
 
-	private IteneraryComponent precedingComponent;
+	protected AbstractItineraryComponent( ItineraryComponent precedingComponent ) {
+		this.precedingComponent = precedingComponent;
+	}
 
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	protected AbstractItineraryComponent() {
-		super();
-		// TODO construct me
+	public static ItineraryComponent getBaseComponent() {
+		return () -> "-- Itinerary --";
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
 	 *
-	 * @generated
-	 * @ordered
 	 */
-
-	protected AbstractItineraryComponent( IteneraryComponent precedingComponent ) {
-		super();
-		// TODO construct me
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!--  end-user-doc  -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-
-	public String getItenerary() {
-		// TODO implement me
-		return "";
-	}
-
+	public abstract String getItinerary();
 }
 
