@@ -1,6 +1,7 @@
 package premiumtravel.state;
 
 import premiumtravel.billing.CashPayment;
+import premiumtravel.cache.PremiumTravelCache;
 import premiumtravel.people.Person;
 import premiumtravel.trip.Trip;
 
@@ -16,14 +17,17 @@ public class CashPaymentStateController extends PaymentStateController {
 	}
 
 	@Override
-	public void accept( HashMap<String, String> data ) {
+	public void accept( PremiumTravelCache premiumTravelCache, HashMap<String, String> data ) {
 		if ( !data.containsKey( "person-id" ) ) {
 			throw new RuntimeException( "The data must contain the key \"person-id\" and its associated value" );
 		}
-		String personID = data.get( "amount" );
-		Person person = this.personRegistry.get( personID );
+		String personID = data.get( "person-id" );
+		Person person = premiumTravelCache.getPersonRegistry().get( personID );
 		if ( person == null ) {
-			throw new RuntimeException( "The given ID does not correspond to a person in the system" );
+			person = premiumTravelCache.getTravellerRegistry().get( personID );
+			if (person == null) {
+				throw new RuntimeException( "The given ID does not correspond to a person in the system" );
+			}
 		}
 		if ( !data.containsKey( "amount" ) ) {
 			throw new RuntimeException( "The data must contain the key \"amount\" and its associated value" );

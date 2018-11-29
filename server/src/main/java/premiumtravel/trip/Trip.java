@@ -4,15 +4,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import premiumtravel.billing.Bill;
 import premiumtravel.billing.PaymentType;
+import premiumtravel.billing.Product;
+import premiumtravel.cache.PremiumTravelCache;
 import premiumtravel.cache.RegistryObject;
-import premiumtravel.cache.TravelAgentRegistry;
-import premiumtravel.cache.TravellerRegistry;
 import premiumtravel.people.TravelAgent;
 import premiumtravel.people.Traveller;
 import premiumtravel.state.StateController;
 import premiumtravel.state.States;
 
-import javax.ejb.EJB;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -27,12 +26,10 @@ public class Trip implements Product, RegistryObject {
 
 	private final UUID tripID;
 
-	@EJB private transient TravelAgentRegistry travelAgentRegistry;
-	@EJB private transient TravellerRegistry travellerRegistry;
-
 	private List<Reservation> reservations = new LinkedList<>();
 	private List<UUID> travellerIDs = new LinkedList<>();
 	private PaymentType paymentType;
+	private transient PremiumTravelCache cache;
 	private UUID travelAgentID;
 	private String thankYouNote;
 	private States state;
@@ -43,8 +40,9 @@ public class Trip implements Product, RegistryObject {
 	 *
 	 * @param travelAgent The agent responsible for the new trip.
 	 */
-	public Trip( TravelAgent travelAgent ) {
+	public Trip( PremiumTravelCache cache, TravelAgent travelAgent ) {
 		super();
+		this.cache = cache;
 		this.state = States.ADD_TRAVELLERS;
 		this.travelAgentID = travelAgent.getID();
 
@@ -83,7 +81,7 @@ public class Trip implements Product, RegistryObject {
 	public List<Traveller> getTravellers() {
 		List<Traveller> travellers = new LinkedList<>();
 		for ( UUID travellerID : this.travellerIDs ) {
-			travellers.add( travellerRegistry.get( travellerID ) );
+			travellers.add( this.cache.getTravellerRegistry().get( travellerID ) );
 		}
 		return travellers;
 	}
@@ -93,7 +91,7 @@ public class Trip implements Product, RegistryObject {
 	}
 
 	public TravelAgent getTravelAgent() {
-		return this.travelAgentRegistry.get( this.travelAgentID );
+		return this.cache.getTravelAgentRegistry().get( this.travelAgentID );
 	}
 
 	public String getThankYouNote() {
@@ -144,6 +142,16 @@ public class Trip implements Product, RegistryObject {
 			totalPrice = totalPrice.add( reservation.getPrice() );
 		}
 		return totalPrice;
+	}
+
+	@Override
+	public String getBillText() {
+		StringBuilder stringBuilder = new StringBuilder();
+		for ( Reservation reservation : this.reservations ) {
+			stringBuilder.append( reservation.getBillText() );
+		}
+		stringBuilder.append( "\n\tTotal Price: $" ).append( getPrice() );
+		return stringBuilder.toString();
 	}
 
 	@Override

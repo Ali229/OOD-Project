@@ -5,7 +5,7 @@ import premiumtravel.people.Person;
 import premiumtravel.people.PersonFactory;
 import premiumtravel.people.Traveller;
 
-import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -22,11 +22,11 @@ public class TravellerRESTController extends AbstractRESTController {
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB private TravellerRegistry travellerRegistry;
+	@Inject private TravellerRegistry travellerRegistry;
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB private PersonFactory personFactory;
+	@Inject private PersonFactory personFactory;
 
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )

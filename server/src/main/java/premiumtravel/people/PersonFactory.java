@@ -2,6 +2,7 @@ package premiumtravel.people;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.cache.PersonRegistry;
 import premiumtravel.cache.TravelAgentRegistry;
 import premiumtravel.cache.TravellerRegistry;
 
@@ -9,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.*;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Model;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.EnumMap;
 import java.util.Map;
@@ -28,9 +30,11 @@ public class PersonFactory {
 
 	private static Map<PersonType, MyFunction> personFunctionMap = new EnumMap<>( PersonType.class );
 
-	@EJB private TravelAgentRegistry travelAgentRegistry;
+	@Inject private TravelAgentRegistry travelAgentRegistry;
 
-	@EJB private TravellerRegistry travellerRegistry;
+	@Inject private TravellerRegistry travellerRegistry;
+
+	@Inject private PersonRegistry personRegistry;
 
 	/**
 	 * This is Java EE's Singleton "constructor"
@@ -63,7 +67,7 @@ public class PersonFactory {
 
 	public Person getGuest( String firstName, String lastName, String phoneNumber ) {
 		Person person = new Person( firstName, lastName, phoneNumber );
-		//		this.personRegistry.add(person);
+		this.personRegistry.add(person);
 		return person;
 	}
 

@@ -2,6 +2,7 @@ package premiumtravel.trip;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.billing.Product;
 import premiumtravel.cache.RegistryObject;
 
 import java.math.BigDecimal;
@@ -70,6 +71,11 @@ public class TravelPackage implements Product, RegistryObject {
 	 */
 	public BigDecimal getPrice() {
 		return this.price;
+	}
+
+	@Override
+	public String getBillText() {
+		return this.transportType.name() + " from " + this.fromPlace.name +  " to " + this.toPlace.name;
 	}
 
 	@Override

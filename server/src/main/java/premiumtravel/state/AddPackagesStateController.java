@@ -1,10 +1,9 @@
 package premiumtravel.state;
 
-import premiumtravel.cache.PackageRegistry;
+import premiumtravel.cache.PremiumTravelCache;
 import premiumtravel.trip.Reservation;
 import premiumtravel.trip.Trip;
 
-import javax.ejb.EJB;
 import java.util.HashMap;
 
 /**
@@ -12,12 +11,10 @@ import java.util.HashMap;
  */
 public class AddPackagesStateController extends StateController {
 
-	@EJB private PackageRegistry packageRegistry;
-
 	/**
 	 *
 	 */
-	public AddPackagesStateController( Trip trip ) {
+	AddPackagesStateController( Trip trip ) {
 		super( trip );
 	}
 
@@ -31,7 +28,7 @@ public class AddPackagesStateController extends StateController {
 	}
 
 	@Override
-	public void accept( HashMap<String, String> data ) {
+	public void accept( PremiumTravelCache premiumTravelCache, HashMap<String, String> data ) {
 		if ( !data.containsKey( "package-id" ) ) {
 			throw new RuntimeException( "The data must contain the key \"package-id\" and its associated value" );
 		}
@@ -44,7 +41,7 @@ public class AddPackagesStateController extends StateController {
 			throw new RuntimeException( "The data must contain the key \"arrival-date\" and its associated value" );
 		}
 		String arrivalDate = data.get( "arrivalDate" );
-		this.trip.addReservation( new Reservation( packageRegistry.get( packageID ), departureDate, arrivalDate ) );
+		this.trip.addReservation( new Reservation( premiumTravelCache.getPackageRegistry().get( packageID ), departureDate, arrivalDate ) );
 	}
 }
 

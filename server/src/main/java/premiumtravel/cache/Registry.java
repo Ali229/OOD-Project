@@ -6,14 +6,17 @@ import org.apache.logging.log4j.Logger;
 import javax.ejb.Lock;
 import javax.ejb.LockType;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * A basic registry for storing items that extend from {@link RegistryObject}.
  *
  * @param <T> The type of object to be stored.
  */
-public abstract class Registry<T extends RegistryObject> extends Observable implements Serializable {
+public abstract class Registry<T extends RegistryObject> implements Serializable {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 
@@ -28,7 +31,7 @@ public abstract class Registry<T extends RegistryObject> extends Observable impl
 	 * Resets the {@link T}s to the given list. The list can be made {@code null} in order to save on resources while
 	 * indicating an empty list.
 	 * <p></p>
-	 * <p><i>Convenience method to be used by the {@link Cache} or current {@link DataSerializer}.</i></p>
+	 * <p><i>Convenience method to be used by the {@link PremiumTravelCache} or current {@link DataSerializer}.</i></p>
 	 *
 	 * @param newList
 	 */
@@ -96,6 +99,5 @@ public abstract class Registry<T extends RegistryObject> extends Observable impl
 		synchronized ( this.registryList ) {
 			this.registryList.add( t );
 		}
-		notifyObservers();
 	}
 }

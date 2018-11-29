@@ -1,11 +1,9 @@
 package premiumtravel.rest;
 
-import premiumtravel.cache.PackageRegistry;
 import premiumtravel.cache.PlaceRegistry;
 import premiumtravel.trip.Place;
-import premiumtravel.trip.TravelPackage;
 
-import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,7 +18,7 @@ public class PlaceRESTController extends AbstractRESTController {
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB private PlaceRegistry placeRegistry;
+	@Inject private PlaceRegistry placeRegistry;
 
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )

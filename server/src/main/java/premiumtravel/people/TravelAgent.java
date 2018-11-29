@@ -15,11 +15,6 @@ public class TravelAgent extends Person {
 	private static final long serialVersionUID = -992437641860585387L;
 
 	/**
-	 * Singleton bean instantiated by Java EE
-	 */
-	@EJB private transient TravelAgentRegistry travelAgentRegistry;
-
-	/**
 	 * Creates a new TravelAgent and <b>automatically adds it to the {@link TravelAgentRegistry}</b>.
 	 *
 	 * @param firstName   The first name of the new Travel Agent.

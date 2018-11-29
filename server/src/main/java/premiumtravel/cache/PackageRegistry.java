@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.*;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Model;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -23,8 +24,8 @@ public class PackageRegistry extends Registry<TravelPackage> {
 
 	private static final long serialVersionUID = 5858594429818177713L;
 
-	@EJB private transient PackageFactory packageFactory;
-	@EJB private transient PlaceRegistry placeRegistry;
+	@Inject private transient PackageFactory packageFactory;
+	@Inject private transient PlaceRegistry placeRegistry;
 
 	@PostConstruct
 	void init() {

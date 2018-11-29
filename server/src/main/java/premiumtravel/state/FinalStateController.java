@@ -1,5 +1,6 @@
 package premiumtravel.state;
 
+import premiumtravel.cache.PremiumTravelCache;
 import premiumtravel.trip.Trip;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class FinalStateController extends StateController {
 	}
 
 	@Override
-	public void accept( HashMap<String, String> stringStringHashMap ) {
+	public void accept( PremiumTravelCache premiumTravelCache, HashMap<String, String> stringStringHashMap ) {
 		throw new RuntimeException( "PUT requests are not accepted now that the trip has been finalized." );
 	}
 }

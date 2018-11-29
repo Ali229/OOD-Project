@@ -23,7 +23,7 @@ public abstract class DataSerializer {
 	 * @ordered
 	 */
 
-	public Cache cache;
+	public PremiumTravelCache premiumTravelCache;
 
 	/**
 	 * <!-- begin-user-doc --> <!--  end-user-doc  -->

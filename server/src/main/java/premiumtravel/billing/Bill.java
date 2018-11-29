@@ -2,7 +2,6 @@ package premiumtravel.billing;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import premiumtravel.trip.Product;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -18,20 +17,22 @@ public class Bill implements Serializable {
 	private static final long serialVersionUID = 7822660391813459523L;
 
 	public List<Payment> payments = new LinkedList<>();
-	private Product product;
+	private String billText;
+	private BigDecimal amount;
 
 	/**
 	 *
 	 */
 	public Bill( Product product ) {
-		this.product = product;
+		this.billText = product.getBillText();
+		this.amount = product.getPrice();
 	}
 
 	/**
 	 *
 	 */
 	public BigDecimal getTotalPrice() {
-		return this.product.getPrice();
+		return this.amount;
 	}
 
 	/**
@@ -49,7 +50,11 @@ public class Bill implements Serializable {
 		for ( Payment payment : this.payments ) {
 			totalPayments = totalPayments.add( payment.amountPaid );
 		}
-		return totalPayments.equals( this.product.getPrice() );
+		return totalPayments.equals( this.amount );
+	}
+
+	public String getBillText() {
+		return this.billText;
 	}
 }
 

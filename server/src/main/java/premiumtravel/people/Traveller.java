@@ -19,12 +19,6 @@ public class Traveller extends Person {
 	public Trip trip;
 
 	/**
-	 * Singleton bean instantiated by Java EE
-	 */
-	@EJB
-	private transient TravellerRegistry travellerRegistry;
-
-	/**
 	 * @param firstName
 	 * @param lastName
 	 * @param phoneNumber

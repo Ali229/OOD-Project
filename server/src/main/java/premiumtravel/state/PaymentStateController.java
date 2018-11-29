@@ -1,13 +1,8 @@
 package premiumtravel.state;
 
-import premiumtravel.cache.PersonRegistry;
 import premiumtravel.trip.Trip;
 
-import javax.ejb.EJB;
-
 public abstract class PaymentStateController extends StateController {
-
-	@EJB PersonRegistry personRegistry;
 
 	/**
 	 * @param trip

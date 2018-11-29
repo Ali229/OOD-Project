@@ -15,7 +15,6 @@ public abstract class AbstractRESTController {
 	static {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.enableComplexMapKeySerialization();
-		gsonBuilder.generateNonExecutableJson();
 		gsonBuilder.serializeNulls();
 		gson = gsonBuilder.create();
 	}

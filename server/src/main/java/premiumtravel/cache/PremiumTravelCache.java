@@ -8,50 +8,55 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.*;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Model;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  *
  */
 @Named
 @Model
+@Default
 @Startup
 @Singleton
 @ApplicationScoped
 @ConcurrencyManagement( ConcurrencyManagementType.CONTAINER )
 @DependsOn( { "PackageRegistry", "PersonRegistry", "TravelAgentRegistry", "TravellerRegistry", "TripRegistry" } )
-public class Cache implements Observer {
+public class PremiumTravelCache {
 
 	private static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
-	private static Wini ini;
 
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB private TravelAgentRegistry travelAgentRegistry;
+	@Inject private TravelAgentRegistry travelAgentRegistry;
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB private TravellerRegistry travellerRegistry;
+	@Inject private TravellerRegistry travellerRegistry;
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB private PersonRegistry personRegistry;
+	@Inject private PersonRegistry personRegistry;
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB private TripRegistry tripRegistry;
+	@Inject private TripRegistry tripRegistry;
+	/**
+	 * Singleton bean instantiated by Java EE
+	 */
+	@Inject private PackageRegistry packageRegistry;
 
 	private SerializationProtocol protocol;
 	private DataSerializer serializer;
 	private File file;
+	private Wini ini;
 
 	/**
 	 * This is Java EE's Singleton "constructor"
@@ -75,12 +80,6 @@ public class Cache implements Observer {
 				logger.error( e.getMessage() );
 			}
 		}
-
-		// Subscribe to registries
-		this.travelAgentRegistry.addObserver( this );
-		this.travellerRegistry.addObserver( this );
-		this.personRegistry.addObserver( this );
-		this.tripRegistry.addObserver( this );
 	}
 
 	/**
@@ -138,11 +137,13 @@ public class Cache implements Observer {
 		}
 	}
 
+	@Lock( LockType.READ )
 	private void saveAll() throws IOException {
 		serializer.saveData( new SaveData( this.personRegistry.getAll(), this.travelAgentRegistry.getAll(),
 				this.travellerRegistry.getAll(), this.tripRegistry.getAll() ) );
 	}
 
+	@Lock( LockType.WRITE )
 	private void reloadAll() throws IOException, ClassNotFoundException {
 		SaveData saveData = serializer.loadData();
 		this.personRegistry.resetRegistry( saveData.people );
@@ -151,14 +152,29 @@ public class Cache implements Observer {
 		this.tripRegistry.resetRegistry( saveData.trips );
 	}
 
-	@Override
-	public void update( Observable o, Object arg ) {
-		try {
-			saveAll();
-		} catch ( IOException e ) {
-			logger.error( "There was an error trying to save the cache." );
-			logger.error( e.getMessage() );
-		}
+	@Lock( LockType.READ )
+	public TravelAgentRegistry getTravelAgentRegistry() {
+		return travelAgentRegistry;
+	}
+
+	@Lock( LockType.READ )
+	public TravellerRegistry getTravellerRegistry() {
+		return travellerRegistry;
+	}
+
+	@Lock( LockType.READ )
+	public PersonRegistry getPersonRegistry() {
+		return personRegistry;
+	}
+
+	@Lock( LockType.READ )
+	public TripRegistry getTripRegistry() {
+		return tripRegistry;
+	}
+
+	@Lock( LockType.READ )
+	public PackageRegistry getPackageRegistry() {
+		return packageRegistry;
 	}
 }
 

@@ -2,15 +2,16 @@ package premiumtravel.state;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.cache.PremiumTravelCache;
 import premiumtravel.trip.Trip;
 
 import java.util.HashMap;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 /**
  *
  */
-public abstract class StateController implements Consumer<HashMap<String, String>> {
+public abstract class StateController implements BiConsumer<PremiumTravelCache, HashMap<String, String>> {
 
 	static final Logger logger = LogManager.getLogger( "premiumtravel.PremiumTravelServer" );
 	final Trip trip;

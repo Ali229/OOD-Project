@@ -3,7 +3,7 @@ package premiumtravel.rest;
 import premiumtravel.cache.PackageRegistry;
 import premiumtravel.trip.TravelPackage;
 
-import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -18,7 +18,7 @@ public class PackageRESTController extends AbstractRESTController {
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB private PackageRegistry packageRegistry;
+	@Inject private PackageRegistry packageRegistry;
 
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )

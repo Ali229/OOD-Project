@@ -2,6 +2,7 @@ package premiumtravel.trip;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import premiumtravel.billing.Product;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -53,6 +54,12 @@ public class Reservation implements Product, Serializable {
 	 */
 	public BigDecimal getPrice() {
 		return this.chosenPackage.getPrice();
+	}
+
+	@Override
+	public String getBillText() {
+		return this.chosenPackage.getBillText() + " [departing: " + this.departingOn + "], [arriving: "
+				+ this.arrivingOn + "]\n\t$" + getPrice() + "\n";
 	}
 }
 

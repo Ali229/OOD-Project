@@ -1,5 +1,6 @@
 package premiumtravel.state;
 
+import premiumtravel.cache.PremiumTravelCache;
 import premiumtravel.trip.Trip;
 
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class ThankYouStateController extends StateController {
 	}
 
 	@Override
-	public void accept( HashMap<String, String> data ) {
+	public void accept( PremiumTravelCache premiumTravelCache, HashMap<String, String> data ) {
 		if ( !data.containsKey( "thank-you-note" ) ) {
 			throw new RuntimeException( "The data must contain the key \"thank-you-note\" and its associated value" );
 		}

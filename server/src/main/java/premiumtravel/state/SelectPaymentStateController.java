@@ -1,6 +1,7 @@
 package premiumtravel.state;
 
 import premiumtravel.billing.PaymentType;
+import premiumtravel.cache.PremiumTravelCache;
 import premiumtravel.trip.Trip;
 
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public class SelectPaymentStateController extends StateController {
 	}
 
 	@Override
-	public void accept( HashMap<String, String> data ) {
+	public void accept( PremiumTravelCache premiumTravelCache, HashMap<String, String> data ) {
 		if ( !data.containsKey( "payment-type" ) ) {
 			throw new RuntimeException( "The data must contain the key \"payment-type\" and its associated value" );
 		}

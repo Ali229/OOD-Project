@@ -6,7 +6,7 @@ import premiumtravel.cache.PersonRegistry;
 import premiumtravel.people.Person;
 import premiumtravel.people.PersonFactory;
 
-import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -24,11 +24,11 @@ public class PersonRESTController extends AbstractRESTController {
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB private PersonFactory personFactory;
+	@Inject private PersonFactory personFactory;
 	/**
 	 * Singleton bean instantiated by Java EE
 	 */
-	@EJB private PersonRegistry personRegistry;
+	@Inject private PersonRegistry personRegistry;
 
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )

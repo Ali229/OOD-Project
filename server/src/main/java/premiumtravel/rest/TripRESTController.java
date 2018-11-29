@@ -1,11 +1,12 @@
 package premiumtravel.rest;
 
-import premiumtravel.cache.TravelAgentRegistry;
-import premiumtravel.cache.TripRegistry;
+import premiumtravel.cache.PremiumTravelCache;
 import premiumtravel.people.TravelAgent;
+import premiumtravel.state.StateController;
 import premiumtravel.trip.Trip;
 
-import javax.ejb.EJB;
+import javax.ejb.DependsOn;
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -17,16 +18,17 @@ import java.util.HashMap;
  * @version 1.0
  */
 @Path( "trip" )
+@DependsOn( { "PackageRegistry", "PersonRegistry", "TravelAgentRegistry", "TravellerRegistry", "TripRegistry",
+					"PlaceRegistry", "PremiumTravelCache" } )
 public class TripRESTController extends AbstractRESTController {
 
-	@EJB private TripRegistry tripRegistry;
-	@EJB private TravelAgentRegistry travelAgentRegistry;
+	@Inject private PremiumTravelCache premiumTravelCache;
 
 	@GET
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response getTrips() {
 		logger.debug( "GET called on /trip" );
-		return Response.ok( gson.toJson( this.tripRegistry.getAll() ) ).build();
+		return Response.ok( gson.toJson( this.premiumTravelCache.getTripRegistry().getAll() ) ).build();
 	}
 
 	@POST
@@ -38,12 +40,12 @@ public class TripRESTController extends AbstractRESTController {
 					.build();
 		}
 		String travelAgentID = data.get( "travel-agent-id" );
-		TravelAgent travelAgent = this.travelAgentRegistry.get( travelAgentID );
+		TravelAgent travelAgent = this.premiumTravelCache.getTravelAgentRegistry().get( travelAgentID );
 		if ( travelAgent == null ) {
 			return addHeaders( Response.status( 400, "The given travel-agent-id is invalid." ) ).build();
 		}
-		Trip newTrip = new Trip( travelAgent );
-		this.tripRegistry.add( newTrip );
+		Trip newTrip = new Trip( this.premiumTravelCache, travelAgent );
+		this.premiumTravelCache.getTripRegistry().add( newTrip );
 		return addHeaders( Response.ok(
 				Json.createObjectBuilder().add( "trip-id", newTrip.getID().toString() ).build().toString() ) ).build();
 	}
@@ -53,7 +55,7 @@ public class TripRESTController extends AbstractRESTController {
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response getTrip( @DefaultValue( "-1" ) @PathParam( "trip-id" ) String tripID ) {
 		logger.debug( "GET called on /trip/" + tripID );
-		Trip trip = this.tripRegistry.get( tripID );
+		Trip trip = this.premiumTravelCache.getTripRegistry().get( tripID );
 		return addHeaders( Response.ok( gson.toJson( trip ) ) ).build();
 	}
 
@@ -63,11 +65,15 @@ public class TripRESTController extends AbstractRESTController {
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response modifyTrip( @DefaultValue( "-1" ) @PathParam( "trip-id" ) String tripID,
 			HashMap<String, String> data ) {
-		logger.debug( "PUT called on /trip/" + tripID );
-		for ( Trip trip : this.tripRegistry.getAll() ) {
+		logger.error( "PUT called on /trip/" + tripID );
+		logger.error( data );
+		for ( Trip trip : this.premiumTravelCache.getTripRegistry().getAll() ) {
 			if ( trip.getID().toString().equals( tripID ) ) {
+				logger.error( "Found trip" );
 				try {
-					trip.getStateController().accept( data );
+					StateController stateController = trip.getStateController();
+					logger.error( stateController.getClass() );
+					stateController.accept( this.premiumTravelCache, data );
 					return addHeaders( Response.accepted() ).build();
 				} catch ( RuntimeException e ) {
 					return addHeaders( Response.status( 400, e.getMessage() ) ).build();
@@ -81,10 +87,9 @@ public class TripRESTController extends AbstractRESTController {
 	@Path( "{trip-id}" )
 	@Consumes( MediaType.APPLICATION_JSON )
 	@Produces( MediaType.APPLICATION_JSON )
-	public Response postTrip( @DefaultValue( "-1" ) @PathParam( "trip-id" ) String tripID,
-			HashMap<String, String> data ) {
+	public Response postTrip( @DefaultValue( "-1" ) @PathParam( "trip-id" ) String tripID ) {
 		logger.debug( "POST called on /trip/" + tripID );
-		for ( Trip trip : this.tripRegistry.getAll() ) {
+		for ( Trip trip : this.premiumTravelCache.getTripRegistry().getAll() ) {
 			if ( trip.getID().toString().equals( tripID ) ) {
 				try {
 					trip.getStateController().nextState();
@@ -102,9 +107,22 @@ public class TripRESTController extends AbstractRESTController {
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response getTripBill( @DefaultValue( "-1" ) @PathParam( "trip-id" ) String tripID ) {
 		logger.debug( "GET called on /trip/" + tripID + "/bill" );
-		Trip trip = this.tripRegistry.get( tripID );
+		Trip trip = this.premiumTravelCache.getTripRegistry().get( tripID );
 		try {
-			return addHeaders( Response.ok( gson.toJson( trip.getBill() ) ) ).build();
+			return addHeaders( Response.ok( gson.toJson( trip.getBill().getBillText() ) ) ).build();
+		} catch ( RuntimeException e ) {
+			return addHeaders( Response.status( 400, e.getMessage() ) ).build();
+		}
+	}
+
+	@GET
+	@Path( "{trip-id}/bill/amount" )
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response getTripBillAmount( @DefaultValue( "-1" ) @PathParam( "trip-id" ) String tripID ) {
+		logger.debug( "GET called on /trip/" + tripID + "/bill" );
+		Trip trip = this.premiumTravelCache.getTripRegistry().get( tripID );
+		try {
+			return addHeaders( Response.ok( gson.toJson( trip.getBill().getTotalPrice() ) ) ).build();
 		} catch ( RuntimeException e ) {
 			return addHeaders( Response.status( 400, e.getMessage() ) ).build();
 		}
@@ -114,8 +132,8 @@ public class TripRESTController extends AbstractRESTController {
 	@Path( "{trip-id}/itinerary" )
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response getTripItinerary( @DefaultValue( "-1" ) @PathParam( "trip-id" ) String tripID ) {
-		logger.debug( "GET called on /trip/" + tripID + "/itinerary");
-		Trip trip = this.tripRegistry.get( tripID );
+		logger.debug( "GET called on /trip/" + tripID + "/itinerary" );
+		Trip trip = this.premiumTravelCache.getTripRegistry().get( tripID );
 		try {
 			return addHeaders( Response.ok( gson.toJson( trip.getBill() ) ) ).build(); // TODO Change bill to itinerary
 		} catch ( RuntimeException e ) {
