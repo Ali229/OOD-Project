@@ -18,10 +18,9 @@ export class MaketripComponent implements OnInit {
   paymentType: boolean;
   showItinerary = false;
   travelersList: Traveler[];
-  packageList: Package[];
-  paymentPersonList: PaymentPerson[];
+  placeList: Place[];
+  paymentPersonList = ['Jeff Adkisson', 'Lynda Brown', 'Patrick Bobbie', 'Joseph Eyles'];
   addedTravelersList: Traveler[] = [];
-  addedPackagesList: Package[] = [];
   selectedTraveler: string;
   selectedFROM: string;
   selectedTO: string;
@@ -29,6 +28,11 @@ export class MaketripComponent implements OnInit {
   selectedPaymentPerson: string;
   agent: string;
   numOfTravelers = 0;
+  calculatedCost = 0;
+  calculatedDuration = 0;
+  creditCardNumber = '';
+  creditCardExpiry = '';
+  checkNumber = '';
 
   constructor(private resService: ResourcesService) {
   }
@@ -36,7 +40,6 @@ export class MaketripComponent implements OnInit {
   ngOnInit() {
     this.stateTraveler();
     this.agent = localStorage.getItem('agent');
-    console.log(this.selectedPaymentType);
   }
 
   showTravelersModal() {
@@ -47,16 +50,13 @@ export class MaketripComponent implements OnInit {
   }
 
   showPackageModal() {
-    this.resService.getAllPlacesObservable().subscribe((response: Package[]) => {
-      this.packageList = response;
+    this.resService.getAllPlacesObservable().subscribe((response: Place[]) => {
+      this.placeList = response;
     });
     this.packageModal.show();
   }
 
   showPaymentPersonModal() {
-    this.resService.getAllPlacesObservable().subscribe((response: PaymentPerson[]) => {
-      this.paymentPersonList = response;
-    });
     this.paymentPersonModal.show();
   }
 
@@ -107,5 +107,10 @@ export class MaketripComponent implements OnInit {
   addTravelerFromList(t: Traveler) {
     this.addedTravelersList.push(t);
     this.numOfTravelers++;
+  }
+
+  calculate() {
+    this.calculatedCost = Math.floor((Math.random() * 1000) + 500);
+    this.calculatedDuration = Math.floor((Math.random() * 10) + 1);
   }
 }

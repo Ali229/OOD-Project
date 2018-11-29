@@ -1,3 +1,4 @@
 class Package {
-  public name: string;
+  public from: string;
+  public to: string;
 }

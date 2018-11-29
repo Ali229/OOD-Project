@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.resService.getAllAgentsObservable().subscribe((response: Agent[]) => {
       this.agentList = response;
-      console.log(this.agentList);
     });
   }
 

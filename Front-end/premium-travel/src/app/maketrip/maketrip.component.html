@@ -29,12 +29,6 @@
     <h3 style="color: white; margin-top: 30px">
       Itinerary Information
     </h3>
-    <div *ngIf="numOfTravelers != 0">
-      <h6 style="color: white; margin-top: 30px">
-        <p>Added Travelers:</p>
-        <p *ngFor="let t of addedTravelersList">{{t}}</p>
-      </h6>
-    </div>
     <div style="margin-top: 50px">
       <p *ngIf="travelers">
         <button class="bt" mdbBtn type="button" color="unique" (click)="showTravelersModal()" mdbWavesEffect>Add
@@ -48,7 +42,7 @@
       </p>
       <p *ngIf="paymentPerson">
         <button class="bt" mdbBtn type="button" color="unique" (click)="showPaymentPersonModal()" mdbWavesEffect>Choose
-          Payment
+          Payment Person
         </button>
       </p>
       <p *ngIf="paymentType">
@@ -61,16 +55,28 @@
     <div *ngIf="showItinerary" style="color: white;">
       <h4>Agent:</h4>
       <h6>{{agent}}</h6>
-      <h4>Travellers:</h4>
-      <h6 *ngFor="let t of addedTravelersList">t</h6>
+      <h4>Travelers:</h4>
+      <h6 *ngFor="let t of addedTravelersList">{{t}}</h6>
       <h4>Packages:</h4>
-      <h6 *ngFor="let p of addedPackagesList">p</h6>
-      <h4>PaymentPerson:</h4>
+      <h6>FROM: {{selectedFROM}} TO: {{selectedTO}}</h6>
+      <h4>Duration:</h4>
+      <h6>{{calculatedDuration}} Hours</h6>
+      <h4>Payment Person:</h4>
       <h6>{{selectedPaymentPerson}}</h6>
-      <h4>PaymentMethod:</h4>
+      <h4>Payment Method:</h4>
       <h6>{{selectedPaymentType}}</h6>
+      <div *ngIf="creditCardNumber.length> 1">
+        <h4>Credit Card Number:</h4>
+        <h6>{{creditCardNumber}}</h6>
+        <h4>Credit Card Expiry:</h4>
+        <h6>{{creditCardExpiry}}</h6>
+      </div>
+      <div *ngIf="checkNumber.length> 2">
+        <h4>Credit Card Number:</h4>
+        <h6>{{checkNumber}}</h6>
+      </div>
       <h4>Payment Amount:</h4>
-      <!--<h6>{{agent}}</h8>-->
+      <h6>${{calculatedCost}}</h6>
       <h4>Thank you for using Rick & Morty Travel!</h4>
     </div>
     <!-------------------------------------------------- End Showing Itinerary ---------------------------------------->
@@ -94,7 +100,8 @@
           <div class="form-row">
             <div class="col">
               <select [(ngModel)]="selectedTraveler" class="browser-default custom-select" name="ds1">
-                <option *ngFor="let traveler of travelersList" selected [value]="traveler.firstName">
+                <option *ngFor="let traveler of travelersList" selected
+                        [value]="traveler.firstName + ' ' + traveler.lastName">
                   {{traveler.firstName + " " +
                 traveler.lastName}}
                 </option>
@@ -146,8 +153,8 @@
             </div>
             <div class="col">
               <select [(ngModel)]="selectedFROM" class="browser-default custom-select" name="ds2">
-                <option *ngFor="let package of packageList" selected [value]="package.name">
-                  {{package.name}}
+                <option *ngFor="let place of placeList" selected [value]="place.name">
+                  {{place.name}}
                 </option>
               </select>
             </div>
@@ -158,22 +165,22 @@
             </div>
             <div class="col">
               <select [(ngModel)]="selectedTO" class="browser-default custom-select" name="ds21">
-                <option *ngFor="let package of packageList" selected [value]="package.name">
-                  {{package.name}}
+                <option *ngFor="let place of placeList" selected [value]="place.name">
+                  {{place.name}}
                 </option>
               </select>
             </div>
           </div>
           <div class="form-row">
             <div class="col">
-              <button mdbBtn type="button" color="unique" mdbWavesEffect>Calculate
+              <button mdbBtn type="button" color="unique" (click)="calculate()" mdbWavesEffect>Calculate
               </button>
             </div>
             <div class="col">
-              Cost: $0
+              Cost: ${{calculatedCost}}
             </div>
             <div class="col">
-              Duration: 0 Hours
+              Duration: {{calculatedDuration}} Hours
             </div>
           </div>
         </form>
@@ -183,7 +190,8 @@
         <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
                 (click)="packageModal.hide()" mdbWavesEffect>Close
         </button>
-        <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="statePaymentPerson()"
+        <button type="button" mdbBtn color="primary" class="relative waves-light"
+                (click)="statePaymentPerson()"
                 mdbWavesEffect>Done
         </button>
       </div>
@@ -209,8 +217,8 @@
           <div class="form-row">
             <div class="col">
               <select [(ngModel)]="selectedPaymentPerson" class="browser-default custom-select" name="ds21">
-                <option *ngFor="let pp of paymentPersonList" selected [value]="pp.firstName + pp.lastName">
-                  {{pp.firstName + pp.lastName}}
+                <option *ngFor="let pp of paymentPersonList" selected [value]="pp">
+                  {{pp}}
                 </option>
               </select>
             </div>
@@ -251,24 +259,28 @@
           <div class="form-row">
             <div class="col">
               <select [(ngModel)]="selectedPaymentType" class="browser-default custom-select" name="ds3">
-                <option selected value="credit">Credit Card</option>
-                <option value="check">Check</option>
-                <option value="cash">Cash</option>
+                <option selected value="Credit">Credit Card</option>
+                <option value="Check">Check</option>
+                <option value="Cash">Cash</option>
               </select>
             </div>
             <div class="col">
-              <div *ngIf="selectedPaymentType == 'credit'" class="md-form">
-                <div class="col"><input mdbInputDirective type="text" id="ccn" class="form-control">
-                  <label for="ccn" class="">Credit Card Number</label>
+              <div *ngIf="selectedPaymentType == 'Credit'" class="md-form">
+                <div class="col"><input [(ngModel)]="creditCardNumber" mdbInputDirective type="text" name="sometb"
+                                        id="ccn"
+                                        class="form-control">
+                  <label for="ccn" class="" name="somelb">Credit Card Number</label>
                 </div>
-                <div class="col"><input mdbInputDirective type="text" id="cce" class="form-control">
-                  <label for="cce" class="">Credit Card Expiry</label></div>
+                <div class="col"><input [(ngModel)]="creditCardExpiry" mdbInputDirective type="text" name="sometb2"
+                                        id="cce" class="form-control">
+                  <label for="cce" class="" name="somelb2">Credit Card Expiry</label></div>
               </div>
-              <div *ngIf="selectedPaymentType == 'check'" class="md-form">
-                <input mdbInputDirective type="text" id="check" class="form-control">
-                <label for="check" class="">Check Number</label>
+              <div *ngIf="selectedPaymentType == 'Check'" class="md-form">
+                <input [(ngModel)]="checkNumber" mdbInputDirective type="text" name="sometb3" id="check"
+                       class="form-control">
+                <label for="check" class="" name="somelb3">Check Number</label>
               </div>
-              <div *ngIf="selectedPaymentType == 'cash'" class="md-form">
+              <div *ngIf="selectedPaymentType == 'Cash'" class="md-form">
                 <input mdbInputDirective type="text" id="cash" class="form-control">
                 <label for="cash" class="">Cash Amount</label>
               </div>
